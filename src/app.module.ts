@@ -32,6 +32,7 @@ import { redisStore } from 'cache-manager-redis-yet';
 import { ConfigService } from '@nestjs/config';
 import { GenerateRedisURL } from './redis/helpers/redis-url.helper';
 import { PatientsModule } from './patients/patients.module';
+import { InvoicesModule } from './invoices/invoices.module';
 @Module({
   controllers: [AppController],
   imports: [
@@ -58,6 +59,7 @@ import { PatientsModule } from './patients/patients.module';
     PatientsModule,
     AirtelMoneyModule,
     RegionsModule,
+    InvoicesModule,
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async (config) => {

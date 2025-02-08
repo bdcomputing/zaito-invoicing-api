@@ -14,14 +14,6 @@ export class CreateInvoiceDto {
   @IsString()
   clientId: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  vatAmount: number;
-
-  @IsOptional()
-  @IsString()
-  serial?: string;
-
   @IsOptional()
   @IsString()
   narration?: string;
@@ -31,7 +23,31 @@ export class CreateInvoiceDto {
   items: InvoiceItemDto[];
 }
 
-export class PostInvoiceDto extends CreateInvoiceDto {
+export class PostInvoiceDto {
+  @IsNotEmpty()
+  @IsString()
+  clientId: string;
+
+  @IsOptional()
+  @IsString()
+  narration?: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  subTotal: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  vatAmount: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  vatRate: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  totalAmount: number;
+
   @IsString()
   @IsNotEmpty()
   createdBy: string;

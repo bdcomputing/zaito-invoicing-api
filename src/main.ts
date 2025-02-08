@@ -25,7 +25,7 @@ async function bootstrap() {
     .setTitle(`${appName}`)
     .setDescription(`Exposed Endpoints for ${appName}`)
     .addServer(server, 'Local environment')
-    .addTag('Dental EMR', 'EMR API')
+    .addTag('EMR', 'EMR API')
     .setVersion(apiVersion)
     .build();
 

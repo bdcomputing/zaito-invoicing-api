@@ -11,6 +11,8 @@ import { PrepareQueryForInvoices } from 'src/invoices/helpers/invoices-query.hel
 import { CreateInvoiceDto, PostInvoiceDto } from '../dto/create-invoice.dto';
 import { UpdateInvoiceDto } from '../dto/update-invoice.dto';
 import { InvoiceInterface } from '../interfaces/invoice.interface';
+import { InvoiceItemDto, PostInvoiceItemDto } from '../dto/invoice-item.dto';
+import { InvoiceItemInterface } from '../interfaces/invoice-item.interface';
 
 @Injectable()
 export class InvoicesService {
@@ -19,6 +21,8 @@ export class InvoicesService {
   constructor(
     @Inject(DatabaseModelEnums.INVOICE_MODEL)
     private invoices: Model<InvoiceInterface>,
+    @Inject(DatabaseModelEnums.INVOICE_ITEM_MODEL)
+    private invoiceItems: Model<InvoiceItemInterface>,
     private eventEmitter: EventEmitter2,
   ) {
     //
@@ -37,11 +41,40 @@ export class InvoicesService {
     userId: string,
   ): Promise<CustomHttpResponse> {
     try {
-      const payload: PostInvoiceDto = createInvoiceDto as PostInvoiceDto;
-      payload.createdBy = userId;
-      const invoice = await this.invoices.create(createInvoiceDto);
+      const { items, clientId, narration } = createInvoiceDto;
+      const payload: PostInvoiceDto = {
+        clientId,
+        subTotal: 0,
+        vatAmount: 0,
+        vatRate: 0,
+        totalAmount: 0,
+        createdBy: userId,
+        balance: 0,
+      };
 
-      // Emit the event that the invoice has been created
+      // prepare the invoice
+      const total = items.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0,
+      );
+
+      payload.subTotal = total;
+      payload.totalAmount = total;
+      payload.balance = total;
+
+      const invoice = await this.invoices.create(payload);
+
+      // add all the items
+      for (let i = 0; i < items.length; i++) {
+        const item: InvoiceItemDto = items[i];
+        const payload: PostInvoiceItemDto = {
+          invoiceId: invoice.id,
+          createdBy: userId,
+          ...item,
+        };
+        await this.invoiceItems.create(payload);
+      }
+      // // Emit the event that the invoice has been created
       this.eventEmitter.emit(SystemEventsEnum.InvoiceCreated, invoice);
 
       return new CustomHttpResponse(

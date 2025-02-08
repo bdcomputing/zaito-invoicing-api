@@ -6,6 +6,7 @@ interface InvoiceAggregatePayload {
   clientId: string;
   paid: boolean;
 }
+
 /**
  * Prepare search for receipts
  *

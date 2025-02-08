@@ -17,3 +17,13 @@ export class InvoiceItemDto {
   @IsNumber()
   price: number;
 }
+
+export class PostInvoiceItemDto extends InvoiceItemDto {
+  @IsNotEmpty()
+  @IsString()
+  invoiceId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  createdBy: string;
+}

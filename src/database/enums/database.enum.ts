@@ -8,6 +8,7 @@ export enum DefaultDatabaseModelEnums {
   COMPANY_ACCOUNT_MODEL = 'Company_Accounts',
 
   INVOICE_MODEL = 'Invoices',
+  INVOICE_ITEM_MODEL = 'invoice_item',
   RECEIPTS_MODEL = 'Receipts',
   OTP_MODEL = 'OTP_Codes',
   MPESA_MODEL = 'Mpesa_Payments',
