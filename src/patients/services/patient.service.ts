@@ -217,7 +217,7 @@ export class PatientService {
       this.logger.error(error);
       return new CustomHttpResponse(
         HttpStatusCodeEnum.BAD_REQUEST,
-        `There was an issue creating patient account ${patientDto.patientName}!`,
+        `There was an issue creating patient ${patientDto.patientName}!`,
         error,
       );
     }
