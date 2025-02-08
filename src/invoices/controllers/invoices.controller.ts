@@ -79,19 +79,13 @@ export class InvoicesController {
   @Get(':id')
   @UseGuards(AuthenticationGuard, PermissionsGuard)
   async findOne(
-    @Param('id') id: string,
-    @Query() query: ExpressQuery,
+    @Param('id') invoiceId: string,
     @GenericResponse() res: GenericResponse,
   ): Promise<CustomHttpResponse> {
-    const invoiceId = id.includes('undefined') ? undefined : id;
-    let riskNoteId: string | undefined = (query as any).riskNoteId;
-    riskNoteId = riskNoteId.includes('undefined') ? undefined : riskNoteId;
-
     // get invoice by id
-    const response = await this.invoicesService.findOne(invoiceId, riskNoteId);
+    const response = await this.invoicesService.findOne(invoiceId);
     // set response status code
     res.setStatus(response.statusCode);
-
     // return response
     return response;
   }

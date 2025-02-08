@@ -39,7 +39,7 @@ export class InvoiceAutomationService {
 
     const date: Date = new Date();
     const prefix = Math.floor(100000 + Math.random() * 900000);
-    const serial = `INV${prefix}-${date.getDate()}${date.getSeconds()}${date.getMilliseconds()}-${uniqueId}`;
+    const serial = `INV-${prefix}${date.getDate()}${date.getSeconds()}${date.getMilliseconds()}-${uniqueId}`;
 
     // Prepare payload
     const payload: any = {

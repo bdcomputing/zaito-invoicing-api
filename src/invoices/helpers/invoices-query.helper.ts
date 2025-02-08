@@ -18,6 +18,9 @@ export function PrepareQueryForInvoices(data: InvoiceAggregatePayload) {
   return [
     {
       $addFields: {
+        invoiceId: {
+          $toString: '$_id',
+        },
         client_id: {
           $toObjectId: '$clientId',
         },
@@ -25,10 +28,17 @@ export function PrepareQueryForInvoices(data: InvoiceAggregatePayload) {
     },
     {
       $lookup: {
-        from: 'clients',
+        from: 'invoice_items',
+        localField: 'invoiceId',
+        foreignField: 'invoiceId',
+        as: 'items',
+      },
+    },
+    {
+      $lookup: {
+        from: 'patients',
         localField: 'client_id',
         foreignField: '_id',
-        pipeline: [{ $project: { _id: 1, clientName: 1 } }],
         as: 'client',
       },
     },
@@ -64,6 +74,54 @@ export function PrepareQueryForInvoices(data: InvoiceAggregatePayload) {
     },
     {
       $limit: data.limit,
+    },
+  ];
+}
+
+export function PrepareQueryForInvoice(invoiceId: string) {
+  return [
+    {
+      $addFields: {
+        invoiceId: {
+          $toString: '$_id',
+        },
+        client_id: {
+          $toObjectId: '$clientId',
+        },
+      },
+    },
+    {
+      $match: {
+        invoiceId: invoiceId,
+      },
+    },
+    {
+      $lookup: {
+        from: 'invoice_items',
+        localField: 'invoiceId',
+        foreignField: 'invoiceId',
+        as: 'items',
+      },
+    },
+    {
+      $lookup: {
+        from: 'patients',
+        localField: 'client_id',
+        foreignField: '_id',
+        as: 'client',
+      },
+    },
+    {
+      $unwind: '$client',
+    },
+    {
+      $project: {
+        client_id: 0,
+        invoiceId: 0,
+      },
+    },
+    {
+      $limit: 1,
     },
   ];
 }

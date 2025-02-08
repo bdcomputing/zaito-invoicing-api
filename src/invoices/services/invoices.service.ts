@@ -7,7 +7,10 @@ import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
-import { PrepareQueryForInvoices } from 'src/invoices/helpers/invoices-query.helper';
+import {
+  PrepareQueryForInvoice,
+  PrepareQueryForInvoices,
+} from 'src/invoices/helpers/invoices-query.helper';
 import { CreateInvoiceDto, PostInvoiceDto } from '../dto/create-invoice.dto';
 import { UpdateInvoiceDto } from '../dto/update-invoice.dto';
 import { InvoiceInterface } from '../interfaces/invoice.interface';
@@ -163,53 +166,18 @@ export class InvoicesService {
    * @return {*}  {Promise<CustomHttpResponse>}
    * @memberof InvoicesService
    */
-  async findOne(
-    id: string | undefined,
-    riskNoteId?: string,
-  ): Promise<CustomHttpResponse> {
+  async findOne(invoiceId: string): Promise<CustomHttpResponse> {
     try {
+      const aggregation: Array<any> = await PrepareQueryForInvoice(invoiceId);
       // Get invoice
       const invoice: InvoiceInterface[] = await this.invoices
-        .aggregate([
-          {
-            $addFields: {
-              id: {
-                $toString: '$_id',
-              },
-            },
-          },
-          {
-            $match: {
-              id: {
-                $regex: id ? id : '',
-                $options: 'i',
-              },
-              $or: [
-                {
-                  riskNoteId: {
-                    $regex: riskNoteId ? riskNoteId : '',
-                    $options: '',
-                  },
-                },
-              ],
-            },
-          },
-          {
-            $limit: 1,
-          },
-        ])
+        .aggregate(aggregation)
         .exec();
 
       if (invoice.length < 1) {
-        if (riskNoteId) {
-          return new CustomHttpResponse(
-            HttpStatusCodeEnum.NOT_FOUND,
-            'Invoice is not yet generated since the risk note is not yet approved',
-            null,
-          );
-        }
         throw new Error('Invoice not found');
       }
+
       return new CustomHttpResponse(
         HttpStatusCodeEnum.OK,
         'Invoice loaded from database successfully!',
