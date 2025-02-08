@@ -23,7 +23,7 @@ export const defaultSettings = () => {
 
     general: {
       app: appName,
-      company: 'bdcomputinglimited Dental clinic Limited',
+      company: 'Zaito Medical Centre Limited',
       email: 'test@bdcomputinglimited.com',
       phone: '+254722968637',
       KRA: 'P89787878H',

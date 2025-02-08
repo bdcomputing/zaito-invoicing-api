@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { SyncSuperAdminDto } from 'src/setup/dto/sync-db.dto';
-import { SetupService } from 'src/setup/services/setup/setup.service';
+import { SetupService } from 'src/setup/services/setup.service';
 import { CustomHttpResponse } from 'src/shared';
 
 @Controller('setup')

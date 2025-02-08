@@ -26,7 +26,6 @@ import { UsersModule } from './users/users.module';
 import { DefaultModules } from './default-modules';
 import { LoggerMiddleware } from './logger/middlewares/logger.middleware';
 import { AirtelMoneyModule } from './payments/airtel-money/airtel-money.module';
-import { RegionsModule } from './regions/regions.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { ConfigService } from '@nestjs/config';
@@ -58,7 +57,6 @@ import { InvoicesModule } from './invoices/invoices.module';
     LoggerModule,
     PatientsModule,
     AirtelMoneyModule,
-    RegionsModule,
     InvoicesModule,
     CacheModule.registerAsync({
       isGlobal: true,
