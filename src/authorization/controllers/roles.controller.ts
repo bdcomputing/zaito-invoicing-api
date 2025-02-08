@@ -15,7 +15,7 @@ import { RequiredPermissions } from '../decorators/permissions.decorator';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { UpdateRoleDto } from '../dto/update-role.dto';
 import { PermissionEnum } from '../enums/permission.enum';
-import { AuthorizationGuard } from '../guards/authorization.guard';
+import { PermissionsGuard } from '../guards/permission.guard';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 
 @Controller('roles')
@@ -33,7 +33,7 @@ export class RolesController {
    * @memberof AuthorizationController
    */
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.CREATE_ROLE)
   async createRole(
     @Body() payload: CreateRoleDto,
@@ -56,7 +56,7 @@ export class RolesController {
    * @memberof AuthorizationController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_ROLE)
   async getAllRoles(@Req() req: any): Promise<CustomHttpResponse> {
     const userId = req.user._id.toString();
@@ -70,7 +70,7 @@ export class RolesController {
    * @memberof AuthorizationController
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_ROLE)
   async getRoleById(@Param('id') id: string): Promise<CustomHttpResponse> {
     return await this.authorizationService.getRoleById(id);
@@ -86,7 +86,7 @@ export class RolesController {
    * @memberof AuthorizationController
    */
   @Patch(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_ROLE)
   async updateRole(
     @Param('id') id: string,

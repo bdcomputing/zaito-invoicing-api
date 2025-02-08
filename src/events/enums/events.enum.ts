@@ -1,4 +1,5 @@
 import { AuthEventEnums } from 'src/auth/enums/auth.enums';
+import { InvoiceEvents } from 'src/invoices/events/invoice-events.enum';
 import { NotificationEventsEnum } from 'src/notifications/enums/notification.enum';
 import { OTPEventEnums } from 'src/otp/enums/otp-events.enum';
 import { PatientEvents } from 'src/patients/enums/patient.events';
@@ -49,6 +50,7 @@ export const SystemEventsEnum = {
   ...NotificationEventsEnum,
   ...PatientEvents,
   ...OTPEventEnums,
+  ...InvoiceEvents,
 };
 
 export type SystemEventsEnum = typeof SystemEventsEnum;

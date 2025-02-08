@@ -24,7 +24,7 @@ import { CustomHttpResponse } from 'src/shared';
 import { Response } from 'express';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { GCSFileResponseInterface } from 'src/file-manager/google-cloud-storage/interfaces/gcs-file.interface';
 import { GcsService } from '../services/gcs/gcs.service';
 import { toSentenceCase } from 'src/shared/helpers';
@@ -52,7 +52,7 @@ export class GcsController {
    * @memberof GcsController
    */
   @Post('upload')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -124,7 +124,7 @@ export class GcsController {
   }
 
   @Get('')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   async getAllFiles() {
     return await this.gcsService.getListFiles();
   }
@@ -157,7 +157,7 @@ export class GcsController {
   }
 
   @Post('upload-multiple')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @UseInterceptors(FilesInterceptor('files', 10))
   async uploadMultipleFiles(
     @UploadedFiles() files: Array<Express.Multer.File>,

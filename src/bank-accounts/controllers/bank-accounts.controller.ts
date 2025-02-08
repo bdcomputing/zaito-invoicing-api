@@ -16,7 +16,7 @@ import { UpdateBankAccountDto } from '../dto/update-bank-account.dto';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { CustomHttpResponse } from 'src/shared';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 
@@ -33,7 +33,7 @@ export class BankAccountsController {
    * @memberof BankAccountsController
    */
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.CREATE_BANK_ACCOUNT)
   async create(
     @Body() createBankAccountDto: CreateBankAccountDto,
@@ -59,7 +59,7 @@ export class BankAccountsController {
    * @memberof BankAccountsController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_BANK_ACCOUNTS)
   async findAll(
     @Query('accountType') accountType: string,
@@ -83,7 +83,7 @@ export class BankAccountsController {
    * @memberof BankAccountsController
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_BANK_ACCOUNT)
   async findOne(
     @Param('id') id: string,
@@ -104,7 +104,7 @@ export class BankAccountsController {
    * @memberof BankAccountsController
    */
   @Patch(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_BANK_ACCOUNT)
   async update(
     @Param('id') id: string,
@@ -133,7 +133,7 @@ export class BankAccountsController {
    * @memberof BankAccountsController
    */
   @Delete(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.DELETE_BANK_ACCOUNT)
   remove(@Param('id') id: string) {
     return this.bankAccountsService.remove(id);

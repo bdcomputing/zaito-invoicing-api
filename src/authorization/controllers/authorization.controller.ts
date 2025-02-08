@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { AuthorizationService } from 'src/authorization/services/authorization.service';
 import { CustomHttpResponse } from 'src/shared';
 import { UserInterface } from 'src/users/interfaces/user.interface';
@@ -34,14 +34,14 @@ export class AuthorizationController {
    * @memberof AuthorizationController
    */
   @Get('permissions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_ROLE)
   async getAllPermissions(): Promise<CustomHttpResponse> {
     return await this.authorizationService.getAllPermissions();
   }
 
   @Get('roles-with-permissions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_ROLE)
   async getRolesWithPermissions(
     @Body() payload: { permissions: PermissionEnum[] },

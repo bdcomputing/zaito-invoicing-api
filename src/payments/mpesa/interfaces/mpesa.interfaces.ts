@@ -124,11 +124,11 @@ export interface B2CResponseInterface {
    *
    * `8` - Would Exceed Maximum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *
@@ -305,11 +305,11 @@ export interface AccountBalanceResponseInterface {
    *
    * `8` - Would Exceed Maxiumum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *
@@ -408,11 +408,11 @@ export interface TransactionStatusResponseInterface {
    *
    * `8` - Would Exceed Maxiumum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *
@@ -511,11 +511,11 @@ export interface ReversalResponseInterface {
    *
    * `8` - Would Exceed Maxiumum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *
@@ -595,11 +595,11 @@ export interface StkPushResponseInterface {
    *
    * `8` - Would Exceed Maxiumum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *
@@ -648,11 +648,11 @@ export interface StkQueryResponseInterface {
    *
    * `8` - Would Exceed Maxiumum Balance
    *
-   * `11` - Debit Account Invalid
+   * `11` - Invoice Account Invalid
    *
    * `12` - Credit Account Invalid
    *
-   * `13` - Unresolved Debit Account
+   * `13` - Unresolved Invoice Account
    *
    * `14` - Unresolved Credit Account
    *

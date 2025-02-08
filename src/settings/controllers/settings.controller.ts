@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CustomHttpResponse } from 'src/shared';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 import { UpdateGeneralSettingsDto } from '../dto/update-general-settings.dto';
@@ -55,7 +55,7 @@ export class SettingsController {
    * @memberof SettingsController
    */
   @Patch('general')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_SETTINGS)
   async updateGeneralSettings(
     @Body() body: UpdateGeneralSettingsDto,
@@ -77,7 +77,7 @@ export class SettingsController {
    * @memberof SettingsController
    */
   @Patch('email')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_SETTINGS)
   async updateEmailSettings(
     @Body() body: UpdateEmailSettingsDto,
@@ -99,7 +99,7 @@ export class SettingsController {
    * @memberof SettingsController
    */
   @Patch('branding')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_SETTINGS)
   async updateBrandingSettings(
     @Body() body: UpdateBrandingSettingsDto,

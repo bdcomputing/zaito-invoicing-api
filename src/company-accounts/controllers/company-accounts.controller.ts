@@ -13,7 +13,7 @@ import {
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { CreateCompanyAccountDto } from 'src/company-accounts/dto/create-company-account.dto';
 import { UpdateCompanyAccountDto } from 'src/company-accounts/dto/update-company-account.dto';
 import { CompanyAccountsService } from 'src/company-accounts/services/company-accounts.service';
@@ -42,7 +42,7 @@ export class CompanyAccountsController {
    * @memberof CompanyAccountsController
    */
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.CREATE_COMPANY_ACCOUNT)
   async create(
     @Body() createCompanyAccountDto: CreateCompanyAccountDto,
@@ -68,7 +68,7 @@ export class CompanyAccountsController {
    * @memberof CompanyAccountsController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_COMPANY_ACCOUNTS)
   async findAll(
     @Query() query: ExpressQuery,
@@ -90,7 +90,7 @@ export class CompanyAccountsController {
    * @memberof CompanyAccountsController
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_COMPANY_ACCOUNT)
   async findOne(
     @Param('id') id: string,
@@ -114,7 +114,7 @@ export class CompanyAccountsController {
    * @memberof CompanyAccountsController
    */
   @Patch(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_COMPANY_ACCOUNT)
   async update(
     @Param('id') id: string,
@@ -143,7 +143,7 @@ export class CompanyAccountsController {
    * @memberof CompanyAccountsController
    */
   @Delete(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.DELETE_COMPANY_ACCOUNT)
   remove(@Param('id') id: string) {
     // TODO: set response status code

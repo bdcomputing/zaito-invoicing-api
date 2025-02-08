@@ -13,7 +13,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { CustomHttpResponse } from 'src/shared';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 import { RegisterEmployeeDto } from 'src/users/dto/register-employee.dto';
@@ -41,7 +41,7 @@ export class EmployeeController {
    * @memberof EmployeeController
    */
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.CREATE_EMPLOYEE)
   @ApiOperation({ description: 'Register Employee' })
   async create(
@@ -68,7 +68,7 @@ export class EmployeeController {
    * @memberof EmployeeController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_EMPLOYEES)
   async getEmployees(
     @Query() query: ExpressQuery,
@@ -90,7 +90,7 @@ export class EmployeeController {
    * @memberof EmployeeController
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_EMPLOYEE)
   async getUserById(
     @Param('id') id: string,
@@ -114,7 +114,7 @@ export class EmployeeController {
    * @memberof EmployeeController
    */
   @Patch(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_EMPLOYEE)
   async update(
     @Param('id') id: string,

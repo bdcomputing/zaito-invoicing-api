@@ -4,7 +4,7 @@ import { UsersService } from 'src/users/services/users.service';
 import { PermissionEnum } from '../enums/permission.enum';
 
 @Injectable()
-export class AuthorizationGuard implements CanActivate {
+export class PermissionsGuard implements CanActivate {
   /**
    * The constructor for the permissions guard.
    *

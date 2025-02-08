@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CustomHttpResponse } from 'src/shared';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { UsersService } from 'src/users/services/users.service';
@@ -27,7 +27,7 @@ export class UsersController {
    * @memberof UsersController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_USER)
   async getAllUsers(
     @GenericResponse() res: GenericResponse,
@@ -47,7 +47,7 @@ export class UsersController {
    * @memberof UsersController
    */
   @Get('role/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_ROLE, PermissionEnum.VIEW_USER)
   async getUsersWithRoleId(
     @Param('id') id: string,
@@ -68,7 +68,7 @@ export class UsersController {
    * @memberof UsersController
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_USER)
   async getUserById(
     @Param('id') id: string,

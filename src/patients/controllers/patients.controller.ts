@@ -14,7 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { RequiredPermissions } from 'src/authorization/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { AuthorizationGuard } from 'src/authorization/guards/authorization.guard';
+import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 import { RegisterPatientDto, UpdatePatientDto } from '../dto/patient.dto';
@@ -39,7 +39,7 @@ export class PatientController {
    * @memberof PatientController
    */
   @Post()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.CREATE_PATIENT)
   async create(
     @Body() patient: RegisterPatientDto,
@@ -66,7 +66,7 @@ export class PatientController {
    * @memberof PatientController
    */
   @Get()
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_PATIENT)
   async getAllPatients(
     @Query() query: ExpressQuery,
@@ -87,7 +87,7 @@ export class PatientController {
    * @returns {Promise<CustomHttpResponse>} The response containing the requested patient.
    */
   @Get(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.VIEW_PATIENT)
   async getPatientById(
     @Param('id') id: string,
@@ -110,7 +110,7 @@ export class PatientController {
    * @returns {Promise<CustomHttpResponse>} The response from updating the patient
    */
   @Patch(':id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @UseGuards(AuthenticationGuard, PermissionsGuard)
   @RequiredPermissions(PermissionEnum.UPDATE_PATIENT)
   async updatePatient(
     @Param('id') id: string,

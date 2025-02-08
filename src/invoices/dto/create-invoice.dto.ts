@@ -1,0 +1,46 @@
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { InvoiceItemDto } from './invoice-item.dto';
+
+export class CreateInvoiceDto {
+  @IsNotEmpty()
+  @IsString()
+  clientId: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  vatAmount: number;
+
+  @IsOptional()
+  @IsString()
+  serial?: string;
+
+  @IsOptional()
+  @IsString()
+  narration?: string;
+
+  @ValidateNested({ each: true })
+  @Type(() => InvoiceItemDto)
+  items: InvoiceItemDto[];
+}
+
+export class PostInvoiceDto extends CreateInvoiceDto {
+  @IsString()
+  @IsNotEmpty()
+  createdBy: string;
+
+  @IsDate()
+  @IsOptional()
+  createdAt?: Date;
+
+  @IsString()
+  @IsNumber()
+  balance: number;
+}
