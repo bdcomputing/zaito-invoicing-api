@@ -31,10 +31,11 @@ export const PatientSchema = new mongoose.Schema({
 
   email: {
     type: String,
-    required: true,
+    required: false,
     lowercase: true,
     trim: true,
     unique: true,
+    sparse: true,
   },
 
   phone: {

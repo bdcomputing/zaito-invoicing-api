@@ -181,34 +181,36 @@ export class PatientService {
        * patient with their name, email, password etc. and link it to the new
        * patient document. Call the usersService to create the user in the DB.
        */
+      if (patientDto.email && patientDto.password) {
+        const password: string = patientDto.password
+          ? patientDto.password
+          : generatePassword({ includeSpecialChars: true });
+        const patientId = patient._id.toString();
 
-      const password: string = patientDto.password
-        ? patientDto.password
-        : generatePassword({ includeSpecialChars: true });
-      const patientId = patient._id.toString();
+        // prepare the user dto
+        const userData: PostUserDto = {
+          patientId,
+          name: patientName,
+          isBackOfficeUser: false,
+          email,
+          password,
+          phone,
+          createdBy,
+        };
 
-      // prepare the user dto
-      const userData: PostUserDto = {
-        patientId,
-        name: patientName,
-        isBackOfficeUser: false,
-        email,
-        password,
-        phone,
-        createdBy,
-      };
+        // create the user
+        const user: UserInterface = (await this.usersService.create(userData))
+          .data;
 
-      // create the user
-      const user: UserInterface = (await this.usersService.create(userData))
-        .data;
+        this.eventEmitter.emit(SystemEventsEnum.UserCreated, user);
+      }
 
       // Emit the event that the patient has been created
       this.eventEmitter.emit(SystemEventsEnum.PatientCreated, patient);
-      this.eventEmitter.emit(SystemEventsEnum.UserCreated, user);
 
       return new CustomHttpResponse(
         HttpStatusCodeEnum.CREATED,
-        `Patient account ${patient.patientName} created successfully!`,
+        `Patient ${patient.patientName} created successfully!`,
         patient,
       );
     } catch (error) {

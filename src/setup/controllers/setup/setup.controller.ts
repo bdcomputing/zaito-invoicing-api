@@ -5,6 +5,11 @@ import { CustomHttpResponse } from 'src/shared';
 
 @Controller('setup')
 export class SetupController {
+  /**
+   * Creates an instance of SetupController.
+   * @param {SetupService} setupService
+   * @memberof SetupController
+   */
   constructor(private readonly setupService: SetupService) {
     //
   }

@@ -12,8 +12,8 @@ export class BasePatientDto {
   patientName: string;
 
   @IsEmail()
-  @IsNotEmpty()
-  email: string;
+  @IsOptional()
+  email?: string;
 
   @IsString()
   @IsOptional()

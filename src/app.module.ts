@@ -36,6 +36,7 @@ import { PatientsModule } from './patients/patients.module';
   controllers: [AppController],
   imports: [
     ...DefaultModules,
+    SetupModule,
     NotificationsModule,
     UsersModule,
     SettingsModule,
@@ -52,7 +53,6 @@ import { PatientsModule } from './patients/patients.module';
     QueuesModule,
     TaskManagerModule,
     SocketGatewayModule,
-    SetupModule,
     DatabaseModule,
     LoggerModule,
     PatientsModule,

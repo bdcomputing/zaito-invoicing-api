@@ -4,7 +4,7 @@ import { BasePatientDto } from './base-patient.dto';
 
 export class RegisterPatientDto extends BasePatientDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
 }
 
