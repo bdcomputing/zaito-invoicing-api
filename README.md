@@ -1,12 +1,12 @@
 <div style="display: flex; gap: 100px; justify-content: center;" markdown="1" align="center" valign="center">
-<a href="https://www.lancolatech.com//" target="blank"><img src="https://www.lancolatech.com/assets/logo-biNxh1_K.png" valign="center" height="60" alt="Nest Logo" /></a>
+<a href="https://www.nestjs.com/" target="blank"><img src="https://nestjs.com/logo-small-gradient.d792062c.svg" valign="center" height="60" alt="Nest Logo" /></a>
 
 </div>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">This is the official <a href="https://www.lancolatech.com/" target="_blank">Dental EMR API Repository</a> built on Nest JS, Bull MQ, Redis, Mongo DB, Mongoose, Docker, and docker-compose. We also use Puppeteer to generate PDFs on the server side.</p>
+  <p align="center">This is the official <a href="https://www.zaitomedicalcentre.co.ke/" target="_blank">Invoicing API Repository</a> built on Nest JS, Bull MQ, Redis, Mongo DB, Mongoose, Docker, and docker-compose. We also use Puppeteer to generate PDFs on the server side.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
       
@@ -74,7 +74,7 @@ npm run redis:start
 or
 
 ```javascript
-redis-stack-server
+redis - stack - server;
 ```
 
 ## Stay in touch
