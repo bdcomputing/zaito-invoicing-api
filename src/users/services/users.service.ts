@@ -49,9 +49,7 @@ export class UsersService {
     private readonly authorizationService: AuthorizationService,
     private readonly rolesService: RolesService,
     private eventEmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Get all users from the database

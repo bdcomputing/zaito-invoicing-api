@@ -5,7 +5,6 @@ import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { LoggerInterface } from 'src/shared/interfaces/logger.interface';
 import { RequestLogHelper } from 'src/shared/utils/req-log-helper';
-import { UserInterface } from 'src/users/interfaces/user.interface';
 import { CreateLogDto, PostLogDto } from '../dto/log.dto';
 import { LogInterface } from '../interfaces/log.interface';
 import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
@@ -23,8 +22,6 @@ export class LoggerService extends Logger implements LoggerInterface {
   constructor(
     @Inject(DatabaseModelEnums.LOG_MODEL)
     private logs: Model<LogInterface>,
-    @Inject(DatabaseModelEnums.USER_MODEL)
-    private user: Model<UserInterface>,
   ) {
     super();
   }

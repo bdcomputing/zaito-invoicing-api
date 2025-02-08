@@ -14,9 +14,7 @@ export class PermissionsGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private readonly usersService: UsersService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Determines whether the request can be processed by the controller.

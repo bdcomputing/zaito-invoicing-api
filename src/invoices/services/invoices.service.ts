@@ -27,9 +27,7 @@ export class InvoicesService {
     @Inject(DatabaseModelEnums.INVOICE_ITEM_MODEL)
     private invoiceItems: Model<InvoiceItemInterface>,
     private eventEmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Create a invoice

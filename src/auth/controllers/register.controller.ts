@@ -17,9 +17,7 @@ export class RegisterController {
   constructor(
     private readonly authService: AuthService,
     private readonly patientService: PatientService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Register an account for a patient

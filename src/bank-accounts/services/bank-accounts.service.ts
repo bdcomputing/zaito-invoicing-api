@@ -15,12 +15,15 @@ import { DatabaseModelEnums } from '../../database/enums/database.enum';
 
 @Injectable()
 export class BankAccountsService {
+  /**
+   * Creates an instance of BankAccountsService.
+   * @param {Model<BankAccountInterface>} bankAccount
+   * @memberof BankAccountsService
+   */
   constructor(
     @Inject(DatabaseModelEnums.BANK_ACCOUNT_MODEL)
     private bankAccount: Model<BankAccountInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Register a new BankAccount

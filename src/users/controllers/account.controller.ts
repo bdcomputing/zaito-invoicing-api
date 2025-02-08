@@ -19,9 +19,7 @@ export class AccountController {
   constructor(
     private readonly usersService: UsersService,
     private readonly authLogsService: AuthLogsService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Get user account for the logged in user

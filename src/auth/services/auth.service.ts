@@ -36,9 +36,7 @@ export class AuthService {
     private readonly redisService: RedisService,
     private readonly eventEmitter: EventEmitter2,
     private readonly configService: ConfigService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    *Authenticate the user using email and Password

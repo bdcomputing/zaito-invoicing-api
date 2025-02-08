@@ -14,9 +14,7 @@ export class AppController {
    * @param {AppService} appService
    * @memberof AppController
    */
-  constructor(private readonly appService: AppService) {
-    //
-  }
+  constructor(private readonly appService: AppService) {}
 
   /**
    * Check connection to the api

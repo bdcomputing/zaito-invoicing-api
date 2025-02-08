@@ -8,11 +8,14 @@ import { OTPInterface } from '../interfaces/otp.interface';
 @Injectable()
 export class OtpAutomationService {
   private logger = new Logger(OtpAutomationService.name);
+  /**
+   * Creates an instance of OtpAutomationService.
+   * @param {Model<OTPInterface>} otp
+   * @memberof OtpAutomationService
+   */
   constructor(
     @Inject(DatabaseModelEnums.OTP_MODEL) private otp: Model<OTPInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   @OnEvent(SystemEventsEnum.OTP_USED, { async: true })
   async invalidateOTP(code: string) {

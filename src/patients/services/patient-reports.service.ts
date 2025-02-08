@@ -14,9 +14,7 @@ export class PatientReportsService {
   constructor(
     @Inject(DatabaseModelEnums.PATIENT_MODEL)
     private patients: Model<PatientInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   async getLatestPatientReports(limit?: number) {
     try {

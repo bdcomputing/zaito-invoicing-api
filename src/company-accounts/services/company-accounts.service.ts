@@ -29,9 +29,7 @@ export class CompanyAccountsService {
   constructor(
     @Inject(DatabaseModelEnums.COMPANY_ACCOUNT_MODEL)
     private companyAccounts: Model<CompanyAccountInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   @OnEvent(SystemEventsEnum.SyncDatabase, { async: true })
   async seed(userId: string) {

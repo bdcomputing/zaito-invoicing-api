@@ -17,9 +17,7 @@ export class OtpService {
    */
   constructor(
     @Inject(DatabaseModelEnums.OTP_MODEL) private otp: Model<OTPInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   async findById(id: string): Promise<OTPInterface> {
     return await this.otp.findById(id);

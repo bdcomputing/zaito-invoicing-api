@@ -29,9 +29,7 @@ export class PasswordService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private eventEmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
   /**
    * Reset user password
    *

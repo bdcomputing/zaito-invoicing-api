@@ -36,9 +36,7 @@ export class PatientService {
     private patient: Model<PatientInterface>,
     private eventEmitter: EventEmitter2,
     private readonly usersService: UsersService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Create  Patient Account

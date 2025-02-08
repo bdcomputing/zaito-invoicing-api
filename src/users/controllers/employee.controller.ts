@@ -29,9 +29,7 @@ export class EmployeeController {
    * @param {UsersService} usersService
    * @memberof EmployeeController
    */
-  constructor(private usersService: UsersService) {
-    //
-  }
+  constructor(private usersService: UsersService) {}
 
   /**
    * Register an employee Account

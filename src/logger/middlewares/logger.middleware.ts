@@ -12,9 +12,7 @@ export class LoggerMiddleware implements NestMiddleware {
   constructor(
     private readonly jwtService: JwtService,
     private readonly eventEmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
   async use(request: Request, response: Response, next: NextFunction) {
     const jwtToken: string | null | undefined = request.headers.authorization
       ? request.headers.authorization.split(' ')[1]

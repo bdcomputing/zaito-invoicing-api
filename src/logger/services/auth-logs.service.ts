@@ -14,14 +14,18 @@ import { RequestLogHelper } from 'src/shared/utils/req-log-helper';
 
 @Injectable()
 export class AuthLogsService {
+  /**
+   * Creates an instance of AuthLogsService.
+   * @param {Model<AuthLogInterface>} logs
+   * @param {Model<UserInterface>} user
+   * @memberof AuthLogsService
+   */
   constructor(
     @Inject(DatabaseModelEnums.AUTH_LOG_MODEL)
     private logs: Model<AuthLogInterface>,
     @Inject(DatabaseModelEnums.USER_MODEL)
     private user: Model<UserInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Create a new auth log

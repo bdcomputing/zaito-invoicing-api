@@ -35,9 +35,7 @@ export class AppWebSocketGateway
     OnGatewayConnection
 {
   private readonly connectedClients: Map<string, Socket> = new Map();
-  constructor() {
-    //
-  }
+  constructor() {}
   @WebSocketServer()
   server: Server<any, ServerToClientEvents>;
 

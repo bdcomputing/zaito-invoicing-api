@@ -19,11 +19,14 @@ import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.i
 
 @Injectable()
 export class BanksService implements OnModuleInit {
+  /**
+   * Creates an instance of BanksService.
+   * @param {Model<BankInterface>} banks
+   * @memberof BanksService
+   */
   constructor(
     @Inject(DatabaseModelEnums.BANK_MODEL) private banks: Model<BankInterface>,
-  ) {
-    //
-  }
+  ) {}
   /**
    * This method is called by NestJS after the module has been initialized
    * and all controllers, providers, etc. have been registered.

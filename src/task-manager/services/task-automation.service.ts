@@ -13,6 +13,14 @@ import { TaskInterface } from '../interfaces/task.interface';
 
 @Injectable()
 export class TaskAutomationService {
+  /**
+   * Creates an instance of TaskAutomationService.
+   * @param {UsersService} usersService
+   * @param {Queue} tasksQueue
+   * @param {Model<TaskInterface>} tasks
+   * @param {EventEmitter2} eventEmmitter
+   * @memberof TaskAutomationService
+   */
   constructor(
     private readonly usersService: UsersService,
     @InjectQueue(QueuesEnum.SEND_EMAIL_ON_TASK_OVERDUE)
@@ -20,9 +28,7 @@ export class TaskAutomationService {
     @Inject(DatabaseModelEnums.TASKS_MODEL)
     private tasks: Model<TaskInterface>,
     private readonly eventEmmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
   /**
    * Respond to task created or updated
    *

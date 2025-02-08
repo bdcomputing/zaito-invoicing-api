@@ -29,9 +29,7 @@ export class AuthorizationService implements OnModuleInit {
     private roles: Model<RoleInterface>,
     @Inject(DatabaseModelEnums.PERMISSION_MODEL)
     private permissions: Model<PermissionInterface>,
-  ) {
-    //
-  }
+  ) {}
   async onModuleInit() {
     await this.syncPermissions();
   }

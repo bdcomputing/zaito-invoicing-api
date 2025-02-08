@@ -18,9 +18,7 @@ export class SmsService {
   constructor(
     private readonly httpService: HttpService,
     private readonly onfonService: OnfonService,
-  ) {
-    //
-  }
+  ) {}
 
   async sendSMSUsingCelcom(sms: SMSDto) {
     const API_KEY = '0e0a65ca1f8a645181b39d350498e0f5';

@@ -32,9 +32,7 @@ export class NewTaskCreatedEmailProcessor {
   constructor(
     private readonly settingsService: SettingsService,
     private readonly notificationsService: NotificationsService,
-  ) {
-    //
-  }
+  ) {}
 
   @Process()
   async sendEmail(job: Job) {

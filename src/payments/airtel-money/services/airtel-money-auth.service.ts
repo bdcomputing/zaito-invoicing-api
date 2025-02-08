@@ -11,9 +11,7 @@ export class AirtelMoneyAuthService {
    *
    * @param {HttpService} httpService The HTTP client to make requests to the Airtel Money API
    */
-  constructor(private readonly httpService: HttpService) {
-    //
-  }
+  constructor(private readonly httpService: HttpService) {}
   /**
    * Gets the access token from the Airtel Money API
    *

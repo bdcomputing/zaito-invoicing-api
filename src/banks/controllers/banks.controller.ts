@@ -20,6 +20,11 @@ import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 
 @Controller('banks')
 export class BanksController {
+  /**
+   * Creates an instance of BanksController.
+   * @param {BanksService} banksService
+   * @memberof BanksController
+   */
   constructor(private readonly banksService: BanksService) {}
 
   @Post()

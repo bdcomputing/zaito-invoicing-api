@@ -60,9 +60,7 @@ export class UserAutomationService {
     private readonly usersService: UsersService,
     private readonly eventEmitter: EventEmitter2,
     private readonly configService: ConfigService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Attach Signature to the user/staff

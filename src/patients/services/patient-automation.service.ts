@@ -23,9 +23,7 @@ export class PatientsAutomationService {
     private patients: Model<PatientInterface>,
     private readonly sequenceService: SequenceService,
     private readonly eventEmitter: EventEmitter2,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Add UniqueId to the patient based on the current number

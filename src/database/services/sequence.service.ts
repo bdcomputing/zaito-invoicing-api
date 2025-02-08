@@ -17,9 +17,7 @@ export class SequenceService {
   constructor(
     @Inject(DatabaseModelEnums.SEQUENCE_MODEL)
     private sequence: Model<SequenceInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Finds a sequence by ID.

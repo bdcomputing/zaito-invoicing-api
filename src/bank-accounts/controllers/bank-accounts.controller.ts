@@ -22,6 +22,11 @@ import { GenericResponse } from 'src/shared/decorators/generic-response.decorato
 
 @Controller('bank-accounts')
 export class BankAccountsController {
+  /**
+   * Creates an instance of BankAccountsController.
+   * @param {BankAccountsService} bankAccountsService
+   * @memberof BankAccountsController
+   */
   constructor(private readonly bankAccountsService: BankAccountsService) {}
 
   /**

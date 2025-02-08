@@ -31,9 +31,7 @@ export class AppService {
     private eventEmitter: EventEmitter2,
     private readonly notificationsService: NotificationsService,
     private readonly configService: ConfigService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Returns the default api response

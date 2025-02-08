@@ -13,9 +13,7 @@ export class InvoiceReportsController {
   constructor(
     private readonly invoiceReportsService: InvoiceReportsService,
     private readonly invoicesService: InvoicesService,
-  ) {
-    //
-  }
+  ) {}
 
   @Get('latest')
   // TODO: Add the relevant permissions

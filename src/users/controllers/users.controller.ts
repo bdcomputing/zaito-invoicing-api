@@ -16,9 +16,7 @@ export class UsersController {
    * @param {UsersService} usersService
    * @memberof UsersController
    */
-  constructor(private readonly usersService: UsersService) {
-    //
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   /**
    * Get all users who can login to the system

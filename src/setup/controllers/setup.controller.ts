@@ -10,9 +10,7 @@ export class SetupController {
    * @param {SetupService} setupService
    * @memberof SetupController
    */
-  constructor(private readonly setupService: SetupService) {
-    //
-  }
+  constructor(private readonly setupService: SetupService) {}
   /**
    * creates the superuser data.
    *

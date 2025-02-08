@@ -20,9 +20,7 @@ import { GenericResponse } from 'src/shared/decorators/generic-response.decorato
 
 @Controller('roles')
 export class RolesController {
-  constructor(private readonly authorizationService: AuthorizationService) {
-    //
-  }
+  constructor(private readonly authorizationService: AuthorizationService) {}
 
   /**
    * Create a role

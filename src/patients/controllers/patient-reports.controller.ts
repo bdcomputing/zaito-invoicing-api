@@ -4,9 +4,12 @@ import { GenericResponse } from 'src/shared/decorators/generic-response.decorato
 
 @Controller('patient-reports')
 export class PatientReportsController {
-  constructor(private readonly patientReportsService: PatientReportsService) {
-    //
-  }
+  /**
+   * Creates an instance of PatientReportsController.
+   * @param {PatientReportsService} patientReportsService
+   * @memberof PatientReportsController
+   */
+  constructor(private readonly patientReportsService: PatientReportsService) {}
 
   @Get('latest')
   async getLatestPatientReports(

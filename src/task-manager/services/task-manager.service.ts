@@ -21,14 +21,19 @@ import { PrepareAggregateForTasks } from '../helpers/tasks-query.helper';
 @Injectable()
 export class TaskManagerService {
   private logger = new Logger(TaskManagerService.name);
+  /**
+   * Creates an instance of TaskManagerService.
+   * @param {Model<TaskInterface>} tasks
+   * @param {EventEmitter2} eventEmitter
+   * @param {UsersService} usersService
+   * @memberof TaskManagerService
+   */
   constructor(
     @Inject(DatabaseModelEnums.TASKS_MODEL)
     private tasks: Model<TaskInterface>,
     private readonly eventEmitter: EventEmitter2,
     private readonly usersService: UsersService,
-  ) {
-    //
-  }
+  ) {}
 
   async create(
     data: CreateTaskDto,

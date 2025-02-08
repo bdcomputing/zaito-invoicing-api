@@ -23,9 +23,7 @@ export class SettingsController {
   constructor(
     private readonly settingsService: SettingsService,
     private readonly sequenceService: SequenceService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Get All Settings

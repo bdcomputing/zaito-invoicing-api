@@ -6,12 +6,15 @@ import { RolesEnum } from '../data/default-roles.data';
 
 @Injectable()
 export class RolesService {
+  /**
+   * Creates an instance of RolesService.
+   * @param {Model<RoleInterface>} roles
+   * @memberof RolesService
+   */
   constructor(
     @Inject(DatabaseModelEnums.ROLE_MODEL)
     private roles: Model<RoleInterface>,
-  ) {
-    //
-  }
+  ) {}
   /**
    * Finds the role for clinics
    *

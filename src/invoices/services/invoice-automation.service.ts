@@ -18,9 +18,7 @@ export class InvoiceAutomationService {
     private readonly sequenceService: SequenceService,
     private readonly eventEmitter: EventEmitter2,
     private readonly invoicesService: InvoicesService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Upon invoice creation, assign a unique id to it

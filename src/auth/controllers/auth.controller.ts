@@ -23,9 +23,7 @@ export class AuthController {
    * @param {AuthService} authService - The authentication service.
    * @param {UsersService} usersService - The users service.
    */
-  constructor(private readonly authService: AuthService) {
-    //
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @ApiResponse({

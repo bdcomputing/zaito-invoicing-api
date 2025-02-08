@@ -19,9 +19,7 @@ export class SetupService {
     private readonly usersService: UsersService,
     private readonly usersAutomationService: UserAutomationService,
     private readonly settingsService: SettingsService,
-  ) {
-    //
-  }
+  ) {}
 
   /**
    * Syncs the super admin user account on startup.

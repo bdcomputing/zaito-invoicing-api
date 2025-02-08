@@ -28,9 +28,7 @@ export class SettingsService implements OnModuleInit {
     @Inject('CACHE_MANAGER') private readonly cacheManager: Cache,
     @Inject(DatabaseModelEnums.SETTING_MODEL)
     private readonly settings: Model<SettingsInterface>,
-  ) {
-    //
-  }
+  ) {}
   /**
    * Initialize the settings service on Module Init
    * This method is called by NestJS after the module has been initialized

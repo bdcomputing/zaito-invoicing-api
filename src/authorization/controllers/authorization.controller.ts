@@ -11,9 +11,7 @@ import { PermissionEnum } from '../enums/permission.enum';
 @ApiTags('Authorization')
 @Controller('authorization')
 export class AuthorizationController {
-  constructor(private readonly authorizationService: AuthorizationService) {
-    //
-  }
+  constructor(private readonly authorizationService: AuthorizationService) {}
 
   /**
    * Sync the roles and permissions

@@ -27,9 +27,7 @@ export class PatientController {
    * Creates an instance of PatientController.
    * @param {PatientService} patientService - The patient service to use
    */
-  constructor(private readonly patientService: PatientService) {
-    //
-  }
+  constructor(private readonly patientService: PatientService) {}
 
   /**
    * Register patients

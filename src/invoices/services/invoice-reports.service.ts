@@ -10,9 +10,7 @@ export class InvoiceReportsService {
   constructor(
     @Inject(DatabaseModelEnums.INVOICE_MODEL)
     private invoices: Model<InvoiceInterface>,
-  ) {
-    //
-  }
+  ) {}
 
   async getLatestInvoicesReports(limit?: number) {
     try {
