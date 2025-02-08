@@ -1,6 +1,6 @@
 services:
   invoicing-web:
-    image: ghcr.io/bdcomputing/invoicing-web-app:latest
+    image: ghcr.io/bdcomputing/zaito-invoicing-web-app:latest
     container_name: invoicing-web-app
     env_file:
       - .env
@@ -15,7 +15,7 @@ services:
     
    # NEST SERVER
   api:
-    image: ghcr.io/bdcomputing/invoicing-api:latest
+    image: ghcr.io/bdcomputing/zaito-invoicing-api:latest
     user: root
     container_name: api
     env_file:
