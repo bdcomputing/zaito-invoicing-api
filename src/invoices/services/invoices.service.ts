@@ -63,7 +63,7 @@ export class InvoicesService {
       payload.totalAmount = total;
       payload.balance = total;
 
-      const invoice = await this.invoices.create(payload);
+      let invoice = await this.invoices.create(payload);
 
       // add all the items
       for (let i = 0; i < items.length; i++) {
@@ -75,8 +75,12 @@ export class InvoicesService {
         };
         await this.invoiceItems.create(payload);
       }
-      // // Emit the event that the invoice has been created
+
+      // Emit the event that the invoice has been created
       this.eventEmitter.emit(SystemEventsEnum.InvoiceCreated, invoice);
+
+      // get the invoice
+      invoice = (await this.findOne(invoice.id)).data;
 
       return new CustomHttpResponse(
         HttpStatusCodeEnum.CREATED,

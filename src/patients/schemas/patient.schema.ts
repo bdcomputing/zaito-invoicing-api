@@ -34,15 +34,16 @@ export const PatientSchema = new mongoose.Schema({
     required: false,
     lowercase: true,
     trim: true,
-    unique: true,
+    unique: false,
     sparse: true,
+    columns: ['email'],
   },
 
   phone: {
     type: String,
     required: false,
     trim: true,
-    unique: true,
+    unique: false,
   },
   KRA_PIN: {
     type: String,

@@ -1,7 +1,7 @@
 export interface InvoiceItemInterface {
   _id: string;
   invoiceId: string;
-  description?: string;
+  description: string;
   quantity: number;
   price: number;
 
