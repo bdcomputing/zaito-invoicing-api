@@ -1,6 +1,6 @@
 {
   "name": "emr-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is the Official Dental EMR API",
   "author": "BD Computing Limited",
   "private": true,
@@ -18,7 +18,7 @@
     "docker:logs": "docker-compose logs",
     "build": "export NODE_OPTIONS=--max_old_space_size=8192 && node ./build/build-pre.cjs && nest build",
     "git-push-version-update": "git fetch && git pull &&  git add . && git commit -m 'chore: updated build version number' && git push",
-    "release": "standard-version && node ./build/build-pre.cjs && npm run git-push-version-update && git push --follow-tags origin dev",
+    "release": "standard-version && node ./build/build-pre.cjs && npm run git-push-version-update && git push --follow-tags",
     "build:render": "rm -Rf node_modules && rm -f package-lock.json && npm install && npm run build",
     "redis:start": "redis-stack-server",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
