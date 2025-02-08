@@ -1,0 +1,79 @@
+services:
+  # NEST SERVER
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+      # Only will build the development stage
+      target: development
+    user: root
+    container_name: api
+    env_file:
+      - .env
+    ports:
+      - $APP_PORT:$APP_PORT
+      # debugging port
+      - 9229:9229
+    networks:
+      - api-network
+    # Mount our host Directory to the docker container
+    # Mount (.) current directory to the docker container /src
+    # reflect file changes from host to container
+    volumes:
+      - .:/src
+      - /src/node_modules
+
+    restart: always
+    depends_on:
+      - redis
+    command: npm run start
+
+  # REDIS
+  redis:
+    # Adjust the build context to your needs targeting the created Dockerfile
+    build:
+      context: ./deployment
+      dockerfile: Dockerfile.redis
+    image: redis:7.2-alpine
+    container_name: redis
+    restart: always
+    networks:
+      - api-network
+    user: root
+    env_file:
+      - .env
+    ports:
+      - $REDIS_PORT:$REDIS_PORT
+    # Run the init script
+    command: sh -c "redis-server --requirepass $REDIS_PASSWORD --port $REDIS_PORT" && "./deployment/redis-init.sh"
+    # Run as privileged to allow the container to change the vm.overcommit_memory setting
+    privileged: true
+    volumes:
+      - ./docker/data/redis:/data
+
+  # REDIS INSIGHT
+  redis_insight:
+    image: redislabs/redisinsight:1.14.0
+    user: root
+    container_name: redis_insight
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - ./docker/data/redis_insight:/db
+    networks:
+      - api-network
+    depends_on:
+      - redis
+
+# NETWORK CONFIG
+networks:
+  api-network:
+    driver: bridge
+
+# VOLUME CONFIG
+volumes:
+  redis:
+    driver: local
+  redis_insight_volume_data:
+    driver: local

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: bdcomputinglimited-api
+    runtime: docker
+    plan: free
+    region: singapore
+    healthCheckPath: /api
+    dockerContext: .
+    dockerfilePath: Dockerfile.render
+    branch: main

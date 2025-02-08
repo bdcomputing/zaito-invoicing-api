@@ -1,0 +1,49 @@
+# Specify node version and choose the image
+FROM node:alpine AS development
+
+# Create app directory
+WORKDIR /src
+
+# Install Puppeteer
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN apk update && apk add --no-cache nmap && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache \
+    chromium \
+    harfbuzz \
+    "freetype>2.8" \
+    ttf-freefont \
+    nss
+
+# Install Node packages
+COPY package*.json .npmrc ./
+RUN npm install
+
+# Bundle app source / copy all other files
+COPY . .
+
+# Build the app to the dist folder
+RUN npm run build
+
+################
+## PRODUCTION ##
+################
+# Build another image named production
+FROM node:alpine AS production
+# Set node enc to Prod
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+# Set working directory
+WORKDIR /src
+
+# Copy all from development stage
+COPY --from=development /src .
+
+# Expose port
+EXPOSE 3000
+
+# Start the server
+CMD ["node", "dist/main"]

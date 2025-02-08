@@ -1,0 +1,48 @@
+# Step 1
+FROM node:alpine AS development
+
+WORKDIR /usr/src/app
+
+COPY package*.json .npmrc ./
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM node:alpine AS production
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+
+ENV REDIS_HOST='localhost'
+ENV REDIS_PORT=6379
+ENV DATABASE_PATH="mongodb+srv://bdcomputinglimited:GOBT21THGcTlLujy@bdcomputinglimited-online-store.ixf5k.mongodb.net/?retryWrites=true&w=majority&appName=bdcomputinglimited-online-store"
+RUN apk update && apk add --no-cache nmap redis && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache \
+    chromium \
+    harfbuzz \
+    "freetype>2.8" \
+    ttf-freefont \
+    nss
+
+WORKDIR /usr/src/app
+
+COPY package*.json .npmrc ./
+
+RUN npm install --omit=dev
+
+COPY . .
+
+COPY --from=development /usr/src/app/dist ./dist
+
+# Expose port
+EXPOSE 3000
+
+# Start the server
+CMD ["sh", "-c", "redis-server --daemonize yes && npm run start:prod"]
