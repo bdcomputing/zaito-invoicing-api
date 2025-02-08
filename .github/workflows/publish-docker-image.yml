@@ -27,10 +27,10 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t ghcr.io/bdcomputing/dental-api:$VERSION .
-          docker tag ghcr.io/bdcomputing/dental-api:$VERSION  ghcr.io/bdcomputing/dental-api:latest
+          docker build -t ghcr.io/bdcomputing/zaito-invoicing-api:$VERSION .
+          docker tag ghcr.io/bdcomputing/zaito-invoicing-api:$VERSION  ghcr.io/bdcomputing/zaito-invoicing-api:latest
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/bdcomputing/dental-api:$VERSION
-          docker push ghcr.io/bdcomputing/dental-api:latest
+          docker push ghcr.io/bdcomputing/zaito-invoicing-api:$VERSION
+          docker push ghcr.io/bdcomputing/zaito-invoicing-api:latest
