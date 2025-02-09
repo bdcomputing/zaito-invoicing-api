@@ -46,9 +46,12 @@ export class PatientsAutomationService {
       const prefix = Math.floor(100000 + Math.random() * 900000);
       const serial = `CN${prefix}-${date.getDate()}${date.getSeconds()}${date.getMilliseconds()}-${uniqueId}`;
 
+      const age: number = this.calculatePatientAge(patient.dateOfBirth);
+
       // Prepare payload
       const payload: any = {
         uniqueId,
+        age,
         accountNumber: addLeadingZeros(uniqueId, 10),
         serial,
       };
@@ -67,5 +70,21 @@ export class PatientsAutomationService {
     }
 
     return updatedPatient;
+  }
+
+  calculatePatientAge(dateOfBirth: string): number {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
   }
 }

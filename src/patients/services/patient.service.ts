@@ -51,8 +51,20 @@ export class PatientService {
     createdBy?: string,
   ): Promise<CustomHttpResponse> {
     try {
-      const { email, KRA_PIN, idNumber, phone, patientName, patientManager } =
-        patientDto;
+      const {
+        email,
+        KRA_PIN,
+        idNumber,
+        phone,
+        patientName,
+        patientManager,
+        dateOfBirth,
+        gender,
+        zipCode,
+        street,
+        town,
+        country,
+      } = patientDto;
 
       // find all users
       const users = await this.usersService.findAll();
@@ -165,8 +177,14 @@ export class PatientService {
         KRA_PIN,
         idNumber,
         patientManager,
+        dateOfBirth,
+        gender,
+        zipCode,
+        street,
+        town,
+        country,
         createdBy,
-      } as unknown as PostPatientDto;
+      };
 
       const patient = await this.patient.create(patientData);
 

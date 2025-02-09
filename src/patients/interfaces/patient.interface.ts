@@ -11,8 +11,8 @@ export interface CreatePatient {
 }
 
 export enum GenderType {
-  'M',
-  'F',
+  M = 'M',
+  F = 'F',
 }
 
 interface BillingAddress {
@@ -22,7 +22,7 @@ interface BillingAddress {
   country: string;
 }
 
-export interface Patient {
+export interface Patient extends CreatePatient {
   _id: string;
   uniqueId: number;
   patientName: string;
@@ -34,7 +34,7 @@ export interface Patient {
   phone: string;
   dateOfBirth: string; // ISO format (YYYY-MM-DD)
   age: number; // ISO format (YYYY-MM-DD)
-  gender: 'Male' | 'Female';
+  gender: GenderType;
   billingAddress: BillingAddress;
 
   verified: boolean;

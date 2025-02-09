@@ -59,6 +59,12 @@ export const PatientSchema = new mongoose.Schema({
     default: false,
     trim: true,
   },
+  age: {
+    type: Number,
+    required: true,
+    default: 0,
+    trim: true,
+  },
   idNumber: {
     type: String,
     required: false,
@@ -66,15 +72,36 @@ export const PatientSchema = new mongoose.Schema({
     sparse: true,
     columns: ['idNumber'],
   },
-  isActive: {
-    type: Boolean,
+
+  dateOfBirth: {
+    type: String,
     required: true,
     trim: true,
-    default: true,
   },
-  shippingAddress: {
+  gender: {
     type: String,
-    required: false,
+    required: true,
+    trim: true,
+  },
+
+  zipCode: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  street: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  town: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  country: {
+    type: String,
+    required: true,
     trim: true,
   },
   // Extend Base Schema

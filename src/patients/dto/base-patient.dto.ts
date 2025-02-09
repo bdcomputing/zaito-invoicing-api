@@ -1,10 +1,12 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
+import { GenderType } from '../interfaces/patient.interface';
 
 export class BasePatientDto {
   @IsNotEmpty()
@@ -38,4 +40,28 @@ export class BasePatientDto {
   @IsString()
   @IsOptional()
   profileImageUrl?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  dateOfBirth: string;
+
+  @IsNotEmpty()
+  @IsEnum(GenderType)
+  gender: GenderType;
+
+  @IsNotEmpty()
+  @IsString()
+  zipCode: string;
+
+  @IsNotEmpty()
+  @IsString()
+  street: string;
+
+  @IsNotEmpty()
+  @IsString()
+  town: string;
+
+  @IsNotEmpty()
+  @IsString()
+  country: string;
 }
