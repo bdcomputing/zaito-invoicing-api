@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface JwtPayloadInterface extends Document {
+export interface JwtPayload extends Document {
   sub: number;
   name: string;
   phone: string;

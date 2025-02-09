@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SettingsService } from '../../../settings/services/settings.service';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
-import { StorageConfigsServiceJsonInterface } from 'src/settings/interfaces/gcs.interface';
-import { GoogleStorageConfigInterface } from '../interfaces/config.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
+import { StorageConfigsServiceJson } from 'src/settings/interfaces/gcs.interface';
+import { GoogleStorageConfig } from '../interfaces/config.interface';
 
 @Injectable()
 export class GCSStorageConfigService {
@@ -18,7 +18,7 @@ export class GCSStorageConfigService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  async loadConfigFromENV(): Promise<GoogleStorageConfigInterface> {
+  async loadConfigFromENV(): Promise<GoogleStorageConfig> {
     return {
       mediaBucket: this.configService.get<string>(
         'GOOGLE_STORAGE_MEDIA_BUCKET',
@@ -60,10 +60,8 @@ export class GCSStorageConfigService {
       },
     };
   }
-  async getStorageConfig(): Promise<GoogleStorageConfigInterface | undefined> {
-    const settings: SettingsInterface = (
-      await this.settingsService.getSettings()
-    ).data;
+  async getStorageConfig(): Promise<GoogleStorageConfig | undefined> {
+    const settings: Settings = (await this.settingsService.getSettings()).data;
     const configFromENV = await this.loadConfigFromENV();
 
     // get the bucket name
@@ -80,7 +78,7 @@ export class GCSStorageConfigService {
       settings && settings.storage && settings.storage.gcs
         ? (settings.storage.gcs.serviceAccount as unknown as string)
         : (JSON.stringify(configFromENV) as unknown as string);
-    let serviceAccount: StorageConfigsServiceJsonInterface | undefined;
+    let serviceAccount: StorageConfigsServiceJson | undefined;
 
     // Parse the Service Account String
     if (serviceAccountString) {

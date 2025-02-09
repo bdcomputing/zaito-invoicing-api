@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface CreateBankAccountInterface extends Document {
+export interface CreateBankAccount extends Document {
   bankId: string;
   accountName: string;
   accountNumber: string;
@@ -8,7 +8,7 @@ export interface CreateBankAccountInterface extends Document {
   holderId: string;
 }
 
-export interface BankAccountInterface extends CreateBankAccountInterface {
+export interface BankAccount extends CreateBankAccount {
   _id: string;
   isActive: boolean;
   createdBy: string;

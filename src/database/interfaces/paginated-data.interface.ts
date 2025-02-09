@@ -1,14 +1,14 @@
-export interface PeriodsInterface {
+export interface Periods {
   year: number;
   months: { month: string; value: number }[];
 }
-export interface PaginatedDataInterface {
+export interface PaginatedData {
   page: number;
   limit: number;
   total: number;
   pages: number;
   data: any;
   filters?: {
-    months?: PeriodsInterface[];
+    months?: Periods[];
   };
 }

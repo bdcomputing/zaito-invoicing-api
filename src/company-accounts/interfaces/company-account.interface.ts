@@ -1,6 +1,6 @@
-import { BankInterface } from 'src/banks/interfaces/banks.interface';
+import { Bank } from 'src/banks/interfaces/banks.interface';
 
-export interface CompanyAccountInterface {
+export interface CompanyAccount {
   _id: string;
   bankId?: string;
   accountName: string;
@@ -9,7 +9,7 @@ export interface CompanyAccountInterface {
   unclearedBalance: number;
   isBankAccount: boolean;
   description?: string;
-  bank?: BankInterface;
+  bank?: Bank;
   isActive: boolean;
   createdBy: string;
   createdAt: Date;

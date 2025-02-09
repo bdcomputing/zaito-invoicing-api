@@ -1,4 +1,4 @@
-export interface LogInterface extends Document {
+export interface Log extends Document {
   ip: string;
   userId: string;
   userAgent: string;

@@ -2,9 +2,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
-import { SequenceInterface } from 'src/database/interfaces/sequence.interface';
+import { Sequence } from 'src/database/interfaces/sequence.interface';
 import { SequenceService } from 'src/database/services/sequence.service';
-import { InvoiceInterface } from 'src/invoices/interfaces/invoice.interface';
+import { Invoice } from 'src/invoices/interfaces/invoice.interface';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { InvoicesService } from './invoices.service';
 
@@ -14,7 +14,7 @@ export class InvoiceAutomationService {
 
   constructor(
     @Inject(DatabaseModelEnums.INVOICE_MODEL)
-    private readonly invoices: Model<InvoiceInterface>,
+    private readonly invoices: Model<Invoice>,
     private readonly sequenceService: SequenceService,
     private readonly eventEmitter: EventEmitter2,
     private readonly invoicesService: InvoicesService,
@@ -23,14 +23,13 @@ export class InvoiceAutomationService {
   /**
    * Upon invoice creation, assign a unique id to it
    *
-   * @param {InvoiceInterface} invoice
+   * @param {Invoice} invoice
    * @return {*}
    * @memberof InvoiceAutomationService
    */
   @OnEvent(SystemEventsEnum.InvoiceCreated, { async: true })
-  async addSequenceNumberToInvoice(invoice: InvoiceInterface): Promise<any> {
-    const sequence: SequenceInterface =
-      await this.sequenceService.getSequence();
+  async addSequenceNumberToInvoice(invoice: Invoice): Promise<any> {
+    const sequence: Sequence = await this.sequenceService.getSequence();
     const uniqueId = +sequence.invoices + 1;
 
     const filter = { _id: invoice._id.toString() };

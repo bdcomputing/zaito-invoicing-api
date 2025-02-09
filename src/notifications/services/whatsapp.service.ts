@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import { FacebookAppInterface } from 'src/settings/interfaces/settings.interface';
+import { FacebookApp } from 'src/settings/interfaces/settings.interface';
 
 @Injectable()
 export class WhatsappService {
   private logger = new Logger(WhatsappService.name);
 
-  sendMessage(data: any, settings: FacebookAppInterface) {
+  sendMessage(data: any, settings: FacebookApp) {
     const config = {
       method: 'post',
       url: `https://graph.facebook.com/${settings.FACEBOOK_VERSION}/${settings.FACEBOOK_PHONE_NUMBER_ID}/messages`,

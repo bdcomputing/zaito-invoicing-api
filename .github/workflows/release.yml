@@ -25,6 +25,7 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="v${tag#v}" \
               --generate-notes
+
   publish-docker-image:
     name: Build and Publish Image
     runs-on: ubuntu-latest

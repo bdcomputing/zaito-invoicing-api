@@ -1,7 +1,7 @@
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 
 export const MagicLoginLinkTemplate = (
-  settings: SettingsInterface,
+  settings: Settings,
   user: { name: string; email: string },
   href: string,
 ) => {

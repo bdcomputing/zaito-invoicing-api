@@ -1,4 +1,4 @@
-export interface RedisRepositoryInterface {
+export interface RedisRepository {
   get(prefix: string, key: string): Promise<string | null>;
   set(prefix: string, key: string, value: string): Promise<void>;
   delete(prefix: string, key: string): Promise<void>;

@@ -1,7 +1,7 @@
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import { appName } from 'src/shared/constants/constants';
 
-export const mailFooterTemplate = (settings: SettingsInterface) => {
+export const mailFooterTemplate = (settings: Settings) => {
   const currentYear = new Date().getFullYear();
   return `
   </div>

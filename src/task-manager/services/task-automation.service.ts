@@ -8,8 +8,8 @@ import { InjectQueue } from '@nestjs/bull';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { QueuesEnum } from 'src/queues/enums/queues.enum';
-import { UserInterface } from 'src/users/interfaces/user.interface';
-import { TaskInterface } from '../interfaces/task.interface';
+import { User } from 'src/users/interfaces/user.interface';
+import { Task } from '../interfaces/task.interface';
 
 @Injectable()
 export class TaskAutomationService {
@@ -17,7 +17,7 @@ export class TaskAutomationService {
    * Creates an instance of TaskAutomationService.
    * @param {UsersService} usersService
    * @param {Queue} tasksQueue
-   * @param {Model<TaskInterface>} tasks
+   * @param {Model<Task>} tasks
    * @param {EventEmitter2} eventEmmitter
    * @memberof TaskAutomationService
    */
@@ -26,21 +26,21 @@ export class TaskAutomationService {
     @InjectQueue(QueuesEnum.SEND_EMAIL_ON_TASK_OVERDUE)
     private tasksQueue: Queue,
     @Inject(DatabaseModelEnums.TASKS_MODEL)
-    private tasks: Model<TaskInterface>,
+    private tasks: Model<Task>,
     private readonly eventEmmitter: EventEmitter2,
   ) {}
   /**
    * Respond to task created or updated
    *
-   * @param {TaskInterface} task
+   * @param {Task} task
    * @memberof TaskAutomationService
    */
   @OnEvent(SystemEventsEnum.TaskCreated, { async: true })
   // @OnEvent(SystemEventsEnum.TaskUpdated, { async: true })
-  async respondToTaskCreated(task: TaskInterface) {
+  async respondToTaskCreated(task: Task) {
     if (task && task.assignee) {
       const assignee = task.assignee;
-      const user: UserInterface = await this.usersService.findOne(assignee);
+      const user: User = await this.usersService.findOne(assignee);
       await this.tasksQueue.add(
         { task, user },
         { removeOnComplete: true, removeOnFail: true },
@@ -76,9 +76,7 @@ export class TaskAutomationService {
         },
       },
     ];
-    const entries: TaskInterface[] = await this.tasks
-      .aggregate(aggregate)
-      .exec();
+    const entries: Task[] = await this.tasks.aggregate(aggregate).exec();
     const newEntries = entries.map((entry) => {
       if (entry.isActive && entry.deadline && !entry.reporterDone) {
         const deadline = new Date(entry.deadline);

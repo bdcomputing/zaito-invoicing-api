@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { BankBranchInterface } from '../interfaces/banks.interface';
+import { BankBranch } from '../interfaces/banks.interface';
 
 export class CreateBankDto {
   @IsString()
@@ -7,7 +7,7 @@ export class CreateBankDto {
   name: string;
 
   @IsOptional()
-  branches?: BankBranchInterface[];
+  branches?: BankBranch[];
 
   @IsString()
   @IsOptional()

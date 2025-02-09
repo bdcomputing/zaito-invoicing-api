@@ -1,6 +1,12 @@
 import { Schema } from 'mongoose';
 
 export const BSchema = new Schema({
+  isActive: {
+    type: Boolean,
+    required: true,
+    trim: true,
+    default: true,
+  },
   uniqueId: {
     type: Number,
     required: false,

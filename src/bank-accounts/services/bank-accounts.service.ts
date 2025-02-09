@@ -10,19 +10,19 @@ import {
 import { Model } from 'mongoose';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { BankAccountInterface } from '../interfaces/bank-accounts.interface';
+import { BankAccount } from '../interfaces/bank-accounts.interface';
 import { DatabaseModelEnums } from '../../database/enums/database.enum';
 
 @Injectable()
 export class BankAccountsService {
   /**
    * Creates an instance of BankAccountsService.
-   * @param {Model<BankAccountInterface>} bankAccount
+   * @param {Model<BankAccount>} bankAccount
    * @memberof BankAccountsService
    */
   constructor(
     @Inject(DatabaseModelEnums.BANK_ACCOUNT_MODEL)
-    private bankAccount: Model<BankAccountInterface>,
+    private bankAccount: Model<BankAccount>,
   ) {}
 
   /**

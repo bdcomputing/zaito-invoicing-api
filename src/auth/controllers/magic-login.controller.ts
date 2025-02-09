@@ -15,7 +15,7 @@ import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { MagicLoginDto } from '../dtos/magic-login.dto';
 import { MagicLoginGuard } from '../guards/magic-login.guard';
 import { MagicLoginStrategy } from '../strategies/magic-login.strategy';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 @ApiTags('Authentication')
 @Controller('auth/magic-login')
@@ -47,7 +47,7 @@ export class MagicLoginController {
     @GenericResponse() _res: GenericResponse,
     @Body(new ValidationPipe()) body: MagicLoginDto,
   ): Promise<CustomHttpResponse> {
-    const response: { user: UserInterface } = await this.authService.verifyUser(
+    const response: { user: User } = await this.authService.verifyUser(
       body.destination,
     );
     const { user } = response;

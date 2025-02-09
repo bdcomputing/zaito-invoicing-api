@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { UsersService } from 'src/users/services/users.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ConfigService } from '@nestjs/config';
@@ -13,7 +13,7 @@ import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { ExtendedReqDto, SignInDto } from '../dtos/sign-in.dto';
 import { JwtRefreshTokenStrategy } from '../strategies/jwt-refresh-token.strategy';
 import { RedisService } from '../../redis/services/redis.service';
-import { PermissionInterface } from 'src/authorization/interfaces/permission.interface';
+import { Permission } from 'src/authorization/interfaces/permission.interface';
 import { CreateAuthLogDto } from 'src/logger/dto/auth-log.dto';
 
 @Injectable()
@@ -106,7 +106,7 @@ export class AuthService {
   async authenticate(res: any, originalReq: any): Promise<CustomHttpResponse> {
     try {
       const { permissions } = await res;
-      const user: UserInterface = await res.user;
+      const user: User = await res.user;
 
       if (!user) {
         return new CustomHttpResponse(
@@ -179,8 +179,8 @@ export class AuthService {
       const decoded = await this.jwtService.verifyAsync(refreshToken);
       // get the user
       const payload: {
-        user: UserInterface;
-        permissions: PermissionInterface[];
+        user: User;
+        permissions: Permission[];
       } = await (
         await this.usersService.getUserUsingId(decoded.sub)
       ).data;

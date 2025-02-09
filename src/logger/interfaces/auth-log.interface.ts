@@ -1,4 +1,4 @@
-export interface AuthLogInterface extends Document {
+export interface AuthLog extends Document {
   ip: string;
   userId?: string;
   userAgent: string;

@@ -1,6 +1,6 @@
-import { StorageConfigsServiceJsonInterface } from './gcs.interface';
+import { StorageConfigsServiceJson } from './gcs.interface';
 
-export interface AddressInterface {
+export interface Address {
   boxAddress: string;
   town: string;
   building?: string;
@@ -15,9 +15,9 @@ export interface GeneralSettings {
   email: string;
   phone: string;
   KRA: string;
-  address: AddressInterface;
+  address: Address;
 }
-export interface FacebookAppInterface {
+export interface FacebookApp {
   FACEBOOK_APP_ID: string;
   FACEBOOK_APP_SECRET: string;
   FACEBOOK_RECIPIENT_WAID: string;
@@ -26,30 +26,30 @@ export interface FacebookAppInterface {
   FACEBOOK_ACCESS_TOKEN: string;
 }
 
-export interface StorageSettingsInterface {
+export interface StorageSettings {
   gcs?: {
-    serviceAccount: StorageConfigsServiceJsonInterface;
+    serviceAccount: StorageConfigsServiceJson;
     bucketName: string;
   };
 }
 
-export interface BrandingInterface {
+export interface Branding {
   logo: string;
   logoFile?: object;
   darkLogo: string;
   favicon: string;
 }
-export interface APIAuthParamsInterface {
+export interface APIAuthParams {
   email: string;
   password: string;
 }
 
-export interface CurrencyConversionInterface {
+export interface CurrencyConversion {
   currency: string;
   rate: number | string;
 }
 
-export interface SettingsInterface {
+export interface Settings {
   general: GeneralSettings;
   balanceBroughtForwardDate?: Date;
   mail?: {
@@ -61,12 +61,12 @@ export interface SettingsInterface {
     host: string;
     from: string;
   };
-  branding: BrandingInterface;
+  branding: Branding;
   appURL: string;
-  currencyConversionAgainstUSD?: CurrencyConversionInterface[];
-  storage?: StorageSettingsInterface;
+  currencyConversionAgainstUSD?: CurrencyConversion[];
+  storage?: StorageSettings;
   createdBy?: string;
 }
-export interface SystemSettingsInterface extends SettingsInterface {
+export interface SystemSettings extends Settings {
   _id: string;
 }

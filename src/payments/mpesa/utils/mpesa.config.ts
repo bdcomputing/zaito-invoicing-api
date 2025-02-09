@@ -7,7 +7,7 @@ export enum MpesaEnvironmentEnum {
   'sandbox',
 }
 
-export interface MpesaConfigInterface {
+export interface MpesaConfig {
   consumerKey: string;
   consumerSecret: string;
   passkey: string;
@@ -27,7 +27,7 @@ const baseURL =
     ? MpesaRoutes.production
     : MpesaRoutes.sandbox;
 
-export const mpesaConfig: MpesaConfigInterface = {
+export const mpesaConfig: MpesaConfig = {
   consumerKey: process.env.MPESA_CONSUMER_KEY,
   consumerSecret: process.env.MPESA_CONSUMER_SECRET,
   passkey: process.env.MPESA_PASS_KEY,

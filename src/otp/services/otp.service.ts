@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { OTPInterface } from '../interfaces/otp.interface';
+import { OTP } from '../interfaces/otp.interface';
 import { Model } from 'mongoose';
 import {
   AccountVerificationCodeOTPDto,
@@ -12,21 +12,19 @@ import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 export class OtpService {
   /**
    * Creates an instance of OtpService.
-   * @param {Model<OTPInterface>} otp
+   * @param {Model<OTP>} otp
    * @memberof OtpService
    */
-  constructor(
-    @Inject(DatabaseModelEnums.OTP_MODEL) private otp: Model<OTPInterface>,
-  ) {}
+  constructor(@Inject(DatabaseModelEnums.OTP_MODEL) private otp: Model<OTP>) {}
 
-  async findById(id: string): Promise<OTPInterface> {
+  async findById(id: string): Promise<OTP> {
     return await this.otp.findById(id);
   }
 
   async generatePasswordResetOTP(data: {
     otp: GeneratePasswordResetOTPDto;
     userId: string;
-  }): Promise<OTPInterface> {
+  }): Promise<OTP> {
     const { otp, userId } = data;
     const payload: any = otp as any;
 
@@ -34,14 +32,14 @@ export class OtpService {
     return await this.otp.create(payload);
   }
 
-  checkIfOTPExpired(otp: OTPInterface): boolean {
+  checkIfOTPExpired(otp: OTP): boolean {
     return new Date().getTime() > +otp.expiry;
   }
 
   async saveAccountVerificationCode(data: {
     otp: AccountVerificationCodeOTPDto;
     userId: string;
-  }): Promise<OTPInterface> {
+  }): Promise<OTP> {
     const { otp, userId } = data;
     const payload: any = otp as any;
 
@@ -51,9 +49,7 @@ export class OtpService {
 
   async findByCode(code: string): Promise<CustomHttpResponse> {
     try {
-      const otp: OTPInterface | undefined = await this.otp
-        .findOne({ code })
-        .exec();
+      const otp: OTP | undefined = await this.otp.findOne({ code }).exec();
 
       // check if the otp is not there or if it is there and not active
       if (!otp || (otp && otp.isActive === false)) {

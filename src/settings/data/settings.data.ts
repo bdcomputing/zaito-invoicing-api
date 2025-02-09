@@ -1,5 +1,5 @@
 import { appName } from 'src/shared/constants/constants';
-import { SettingsInterface } from '../interfaces/settings.interface';
+import { Settings } from '../interfaces/settings.interface';
 
 /**
  * Returns the default application settings object.
@@ -14,7 +14,7 @@ import { SettingsInterface } from '../interfaces/settings.interface';
  * - Credit limit config
  */
 export const defaultSettings = () => {
-  const defaultSettings: SettingsInterface = {
+  const defaultSettings: Settings = {
     branding: {
       logo: '',
       darkLogo: '',

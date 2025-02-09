@@ -3,17 +3,16 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
-import { LoggerInterface } from 'src/shared/interfaces/logger.interface';
 import { RequestLogHelper } from 'src/shared/utils/req-log-helper';
 import { CreateLogDto, PostLogDto } from '../dto/log.dto';
-import { LogInterface } from '../interfaces/log.interface';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { Log } from '../interfaces/log.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { ExpressQuery } from 'src/shared/utils/express-query.util';
 
 @Injectable()
-export class LoggerService extends Logger implements LoggerInterface {
+export class LoggerService extends Logger implements Logger {
   /**
    * Constructor
    * @param logs - The AuthLog model.
@@ -21,7 +20,7 @@ export class LoggerService extends Logger implements LoggerInterface {
    */
   constructor(
     @Inject(DatabaseModelEnums.LOG_MODEL)
-    private logs: Model<LogInterface>,
+    private logs: Model<Log>,
   ) {
     super();
   }
@@ -112,14 +111,14 @@ export class LoggerService extends Logger implements LoggerInterface {
         .exec();
 
       // get all the auth logs
-      const logs: LogInterface[] = await this.logs.aggregate(search).exec();
+      const logs: Log[] = await this.logs.aggregate(search).exec();
 
       const total = counts.length > 0 ? counts[0].count : 0;
 
       const pages = Math.ceil(total / limit);
 
       // prepare the response
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,

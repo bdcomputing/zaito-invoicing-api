@@ -1,8 +1,5 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import {
-  CreateRoleInterface,
-  RoleInterface,
-} from '../interfaces/roles.interface';
+import { CreateRole, Role } from '../interfaces/roles.interface';
 import { Model } from 'mongoose';
 import { CustomHttpResponse } from 'src/shared';
 import { DefaultPermissionsData } from '../data/permissions.data';
@@ -11,7 +8,7 @@ import { DefaultRolesData } from '../data/default-roles.data';
 import { CreateRoleDto, PostRoleDto } from '../dto/create-role.dto';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { RegisterPermissionDto } from '../dto/permission.dto';
-import { PermissionInterface } from '../interfaces/permission.interface';
+import { Permission } from '../interfaces/permission.interface';
 import { PermissionEnum } from '../enums/permission.enum';
 import { OnEvent } from '@nestjs/event-emitter';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
@@ -20,15 +17,15 @@ import { SystemEventsEnum } from 'src/events/enums/events.enum';
 export class AuthorizationService implements OnModuleInit {
   /**
    * Creates an instance of AuthorizationService.
-   * @param {Model<RoleInterface>} roles
-   * @param {Model<PermissionInterface>} permissions
+   * @param {Model<Role>} roles
+   * @param {Model<Permission>} permissions
    * @memberof AuthorizationService
    */
   constructor(
     @Inject(DatabaseModelEnums.ROLE_MODEL)
-    private roles: Model<RoleInterface>,
+    private roles: Model<Role>,
     @Inject(DatabaseModelEnums.PERMISSION_MODEL)
-    private permissions: Model<PermissionInterface>,
+    private permissions: Model<Permission>,
   ) {}
   async onModuleInit() {
     await this.syncPermissions();
@@ -36,7 +33,7 @@ export class AuthorizationService implements OnModuleInit {
   /**
    *Seed all the permissions
    *
-   * @return {*}  {Promise<PermissionInterface[]>}
+   * @return {*}  {Promise<Permission[]>}
    * @memberof AuthorizationService
    */
   @OnEvent(SystemEventsEnum.SyncSuperUserAccount, { async: true })
@@ -93,7 +90,7 @@ export class AuthorizationService implements OnModuleInit {
   ): Promise<CustomHttpResponse> {
     try {
       const roles = await this.roles.find().exec();
-      const _roleFromDB = roles.find((rl: RoleInterface) => {
+      const _roleFromDB = roles.find((rl: Role) => {
         return rl.role === data.role;
       });
 
@@ -156,17 +153,17 @@ export class AuthorizationService implements OnModuleInit {
    * Sync Roles
    *
    * @param {{ userId: string }} data
-   * @return {*}  {Promise<RoleInterface[]>}
+   * @return {*}  {Promise<Role[]>}
    * @memberof AuthorizationService
    */
-  async syncRoles(data: { userId: string }): Promise<RoleInterface[]> {
+  async syncRoles(data: { userId: string }): Promise<Role[]> {
     const roles = await this.roles.find().exec();
     const defaultRolesData = DefaultRolesData;
 
     // Loop through the default roles
     for (let i = 0; i < defaultRolesData.length; i++) {
-      const role: CreateRoleInterface = defaultRolesData[i];
-      const _roleFromDB = roles.find((rl: RoleInterface) => {
+      const role: CreateRole = defaultRolesData[i];
+      const _roleFromDB = roles.find((rl: Role) => {
         return rl.role === role.role;
       });
       // Check if the role exists
@@ -300,7 +297,7 @@ export class AuthorizationService implements OnModuleInit {
   ): Promise<string[]> {
     const roles = (await this.getAllRoles(userId)).data || [];
     const filteredRoles: string[] = [];
-    await roles.forEach((role: RoleInterface) => {
+    await roles.forEach((role: Role) => {
       const hasPermissions = roles
         .join(',')
         .includes(payload.permissions.join(','));

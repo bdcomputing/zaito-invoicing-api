@@ -1,9 +1,9 @@
-export interface CreateRoleInterface {
+export interface CreateRole {
   role: string;
   permissions: string[];
 }
 
-export interface RoleInterface extends CreateRoleInterface {
+export interface Role extends CreateRole {
   _id: string;
   isActive: boolean;
 }

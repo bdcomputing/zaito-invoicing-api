@@ -25,7 +25,7 @@ import { Response } from 'express';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
-import { GCSFileResponseInterface } from 'src/file-manager/google-cloud-storage/interfaces/gcs-file.interface';
+import { GCSFileResponse } from 'src/file-manager/google-cloud-storage/interfaces/gcs-file.interface';
 import { GcsService } from '../services/gcs/gcs.service';
 import { toSentenceCase } from 'src/shared/helpers';
 
@@ -79,7 +79,7 @@ export class GcsController {
     // Upload the file to GCP
     const mediaLink = await this.gcsService.uploadFile(file);
 
-    const metadata: GCSFileResponseInterface = {
+    const metadata: GCSFileResponse = {
       name: file.originalname,
       contentType: file.mimetype,
       size: file.size,
@@ -167,7 +167,7 @@ export class GcsController {
     const userId = req.user._id.toString();
 
     // Array to store metadata of each uploaded file
-    const metadataArray: GCSFileResponseInterface[] = [];
+    const metadataArray: GCSFileResponse[] = [];
 
     // Upload each file and push its metadata to the array
     if (files && files.length) {
@@ -178,7 +178,7 @@ export class GcsController {
         const mediaLink = await this.gcsService.uploadFileBuffer(fileToUpload);
         const fileName = file.originalname;
         // Create metadata object
-        const metadata: GCSFileResponseInterface = {
+        const metadata: GCSFileResponse = {
           name: fileName,
           contentType: file.mimetype,
           size: file.size,

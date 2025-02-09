@@ -6,7 +6,7 @@ export enum AirtelMoneyEnvironmentEnum {
   'sandbox',
 }
 
-export interface AirtelMoneyConfigInterface {
+export interface AirtelMoneyConfig {
   clientID: string;
   clientSecret: string;
   environment: AirtelMoneyEnvironmentEnum;
@@ -20,7 +20,7 @@ const baseURL =
     : AirtelMoneyRoutes.sandbox;
 
 // configuration
-export const airtelMoneyConfig: AirtelMoneyConfigInterface = {
+export const airtelMoneyConfig: AirtelMoneyConfig = {
   clientID: process.env.AIRTEL_MONEY_CLIENT_ID,
   clientSecret: process.env.AIRTEL_MONEY_CLIENT_SECRET,
   environment: process.env

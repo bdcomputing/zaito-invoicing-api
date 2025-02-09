@@ -6,13 +6,13 @@ import {
 } from '@nestjs/bull';
 import { QueuesEnum } from '../../enums/queues.enum';
 import { Logger } from '@nestjs/common';
-import { TaskInterface } from 'src/task-manager/interfaces/task.interface';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { Task } from 'src/task-manager/interfaces/task.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { Job } from 'bull';
 import { NotificationsService } from 'src/notifications/services/notifications.service';
 import { SettingsService } from 'src/settings/services/settings.service';
-import { SendEmailInterface } from 'src/notifications/interfaces/email.interface';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { SendEmail } from 'src/notifications/interfaces/email.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import {
   NotificationChannelsEnum,
   NotificationTypeEnum,
@@ -36,7 +36,7 @@ export class NewTaskOverdueEmailProcessor {
 
   @Process()
   async sendEmail(job: Job) {
-    const data: { task: TaskInterface; user: UserInterface } = job.data;
+    const data: { task: Task; user: User } = job.data;
     const { user, task } = data;
     // check of the user has subscribed
     const hasSubscribed = getNotificationSubscriptionStatus({
@@ -47,10 +47,9 @@ export class NewTaskOverdueEmailProcessor {
 
     if (hasSubscribed) {
       // send the email
-      const settings: SettingsInterface = (
-        await this.settingsService.getSettings()
-      ).data;
-      const mail: SendEmailInterface = {
+      const settings: Settings = (await this.settingsService.getSettings())
+        .data;
+      const mail: SendEmail = {
         html: NewOverdueTaskEmailTemplate({ settings, employee: user, task }),
         recipient: user.email,
         textAlignment: 'left',

@@ -2,10 +2,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { CreateBankDto, PostBankDto } from '../dto/create-bank.dto';
 import { PostUpdatedBankDto, UpdateBankDto } from '../dto/update-bank.dto';
 import { BanksData } from '../data/banks.data';
-import {
-  BankInterface,
-  CreateBankInterface,
-} from '../interfaces/banks.interface';
+import { Bank, CreateBank } from '../interfaces/banks.interface';
 import { Model } from 'mongoose';
 
 import { Query as ExpressQuery } from 'express-serve-static-core';
@@ -15,17 +12,17 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { PrepareBankAggregation } from '../helpers/bank-aggregator.helper';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 
 @Injectable()
 export class BanksService implements OnModuleInit {
   /**
    * Creates an instance of BanksService.
-   * @param {Model<BankInterface>} banks
+   * @param {Model<Bank>} banks
    * @memberof BanksService
    */
   constructor(
-    @Inject(DatabaseModelEnums.BANK_MODEL) private banks: Model<BankInterface>,
+    @Inject(DatabaseModelEnums.BANK_MODEL) private banks: Model<Bank>,
   ) {}
   /**
    * This method is called by NestJS after the module has been initialized
@@ -41,15 +38,14 @@ export class BanksService implements OnModuleInit {
 
   @OnEvent(SystemEventsEnum.SyncDatabase, { async: true })
   async seed(userId?: string) {
-    const existingBanks: BankInterface[] =
-      (await this.findAll()).data.data || [];
-    const banks: CreateBankInterface[] = BanksData || [];
+    const existingBanks: Bank[] = (await this.findAll()).data.data || [];
+    const banks: CreateBank[] = BanksData || [];
     // Loop all the banks
     for (let i = 0; i < banks.length; i++) {
-      const bank: CreateBankInterface | undefined = banks[i];
+      const bank: CreateBank | undefined = banks[i];
       if (bank) {
         const bankExisting = existingBanks.find(
-          (_bank: BankInterface) => _bank.name === bank.name,
+          (_bank: Bank) => _bank.name === bank.name,
         );
         if (!bankExisting) {
           await this.create(bank, userId);
@@ -105,7 +101,7 @@ export class BanksService implements OnModuleInit {
 
       const pages = Math.ceil(total / limit);
 
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,

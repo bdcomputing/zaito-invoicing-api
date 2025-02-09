@@ -1,6 +1,6 @@
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 
-export interface TaskInterface {
+export interface Task {
   _id: string;
   assignee: string;
   description: string;
@@ -8,7 +8,7 @@ export interface TaskInterface {
   isActive: boolean;
   isSelfTask: boolean;
   overdue: boolean;
-  creator?: UserInterface;
+  creator?: User;
   deadline: Date | string;
   reminderDate: Date | string;
   assigneeDone: boolean;

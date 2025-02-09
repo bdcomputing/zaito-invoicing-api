@@ -6,7 +6,7 @@ import { SystemEventsEnum } from './events/enums/events.enum';
 import { CustomHttpResponse } from './shared';
 import { HttpStatusCodeEnum } from './shared/enums/status-codes.enum';
 import { NotificationsService } from './notifications/services/notifications.service';
-import { SendEmailInterface } from './notifications/interfaces/email.interface';
+import { SendEmail } from './notifications/interfaces/email.interface';
 import { ReleasesDto } from './shared/dto/releases.dto';
 import { appName } from './shared/constants/constants';
 import { ConfigService } from '@nestjs/config';
@@ -87,7 +87,7 @@ export class AppService {
 
       for (let i = 0; i < emails.length; i++) {
         const email = emails[i];
-        const mail: SendEmailInterface = {
+        const mail: SendEmail = {
           html: { template: `This is a trial email` },
           recipient: email,
           textAlignment: 'left',

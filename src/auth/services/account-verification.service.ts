@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SendEmailInterface } from 'src/notifications/interfaces/email.interface';
+import { SendEmail } from 'src/notifications/interfaces/email.interface';
 import {
   AccountVerificationCodeOTPDto,
   GenerateOTPDto,
@@ -7,7 +7,7 @@ import {
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { GenerateOTPHelper } from 'src/shared/helpers';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { ValidateOTPDto } from '../dtos/validate-otp.dto';
 import { UsersService } from '../../users/services/users.service';
 import { OtpService } from '../../otp/services/otp.service';
@@ -39,10 +39,10 @@ export class AccountVerificationService {
   /**
    * Generate OTP Code to validate user Account
    *
-   * @param {UserInterface} user
+   * @param {User} user
    * @memberof AuthService
    */
-  async requestOTP(user: UserInterface): Promise<CustomHttpResponse> {
+  async requestOTP(user: User): Promise<CustomHttpResponse> {
     try {
       const otp: GenerateOTPDto = GenerateOTPHelper(user);
       // generate the payload
@@ -70,7 +70,7 @@ export class AccountVerificationService {
       const settings = (await this.settingsService.getSettings()).data;
 
       // prepare the email
-      const mail: SendEmailInterface = {
+      const mail: SendEmail = {
         html: AccountVerificationOTPTemplate(settings, user, otpResponse),
         recipient: user.email,
         hasHero: false,
@@ -115,7 +115,7 @@ export class AccountVerificationService {
    * @memberof AuthService
    */
   async validateOTP(data: {
-    user: UserInterface;
+    user: User;
     body: ValidateOTPDto;
   }): Promise<CustomHttpResponse> {
     const { body } = data;

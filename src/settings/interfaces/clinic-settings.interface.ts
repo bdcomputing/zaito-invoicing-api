@@ -1,9 +1,6 @@
-import {
-  BrandingInterface,
-  StorageSettingsInterface,
-} from './settings.interface';
+import { Branding, StorageSettings } from './settings.interface';
 
-export interface ClinicSettingsInterface {
+export interface ClinicSettings {
   clinicId: string;
   isMailCredentialsDefault: boolean;
   mail?: {
@@ -15,12 +12,12 @@ export interface ClinicSettingsInterface {
     host: string;
     from: string;
   };
-  branding: BrandingInterface;
+  branding: Branding;
   appURL: string;
-  storage?: StorageSettingsInterface;
+  storage?: StorageSettings;
   createdBy?: string;
 }
 
-export interface SystemSettingsInterface extends ClinicSettingsInterface {
+export interface SystemSettings extends ClinicSettings {
   _id: string;
 }

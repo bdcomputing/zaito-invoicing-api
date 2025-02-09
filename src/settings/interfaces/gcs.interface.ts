@@ -1,4 +1,4 @@
-export interface StorageConfigsServiceJsonInterface {
+export interface StorageConfigsServiceJson {
   type: string;
   project_id: string;
   private_key_id: string;

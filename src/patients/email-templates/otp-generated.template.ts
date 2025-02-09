@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { UserInterface } from 'src/users/interfaces/user.interface';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { User } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import { GenerateOTPDto } from 'src/otp/dto/generate-otp.dto';
 
 export const OTPGeneratedTemplate = (
-  settings: SettingsInterface,
-  user: UserInterface,
+  settings: Settings,
+  user: User,
   otp: GenerateOTPDto,
 ) => {
   const css = '';

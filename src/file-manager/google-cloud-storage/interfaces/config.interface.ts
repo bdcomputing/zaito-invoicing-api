@@ -1,4 +1,4 @@
-export interface GoogleStorageConfigInterface {
+export interface GoogleStorageConfig {
   mediaBucket: string;
   googleAccType: string;
   googleProjectId: string;

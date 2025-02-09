@@ -1,10 +1,10 @@
 import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { RedisRepositoryInterface } from '../interfaces/redis.repository.interface';
+import { RedisRepository } from '../interfaces/redis.repository.interface';
 
 @Injectable()
-export class RedisRepository
-  implements OnModuleDestroy, RedisRepositoryInterface
+export class RedisRepositoryService
+  implements OnModuleDestroy, RedisRepository
 {
   /**
    * Creates an instance of RedisRepository.

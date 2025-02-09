@@ -1,6 +1,6 @@
 import { NotificationTypeEnum } from '../enums/notification.enum';
 
-export interface NotificationSubScriptionsInterface {
+export interface NotificationSubScriptions {
   notification: NotificationTypeEnum;
   channels: {
     sms: boolean;

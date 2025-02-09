@@ -1,6 +1,6 @@
-import { CreateBankInterface } from '../interfaces/banks.interface';
+import { CreateBank } from '../interfaces/banks.interface';
 
-export const BanksData: CreateBankInterface[] = [
+export const BanksData: CreateBank[] = [
   {
     name: 'ABSA BANK KENYA PLC',
     branches: [],

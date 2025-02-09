@@ -5,14 +5,14 @@ import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { FileUploadedResponseDto } from 'src/file-manager/google-cloud-storage/dtos/file-uploaded.dto';
-import { GCSFileResponseInterface } from 'src/file-manager/google-cloud-storage/interfaces/gcs-file.interface';
+import { GCSFileResponse } from 'src/file-manager/google-cloud-storage/interfaces/gcs-file.interface';
 import { EmployeeAccountCreatedEmailTemplate } from 'src/notifications/templates/employee/account-created.template';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { NotificationsService } from 'src/notifications/services/notifications.service';
-import { SendEmailInterface } from 'src/notifications/interfaces/email.interface';
-import { RoleInterface } from 'src/authorization/interfaces/roles.interface';
+import { SendEmail } from 'src/notifications/interfaces/email.interface';
+import { Role } from 'src/authorization/interfaces/roles.interface';
 import { RolesEnum } from 'src/authorization/data/default-roles.data';
 import { RegisterEmployeeDto } from 'src/users/dto/register-employee.dto';
 import { generatePassword } from 'src/shared/utils/password-generator.util';
@@ -20,7 +20,7 @@ import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import { SuperUserAccountCreatedEmailTemplate } from 'src/notifications/templates/admins/super-user-account-created.template';
 import { PasswordResetLinkTemplate } from 'src/auth/email-templates/password-reset-link.template';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import { ConfigService } from '@nestjs/config';
 import { SyncSuperAdminDto } from 'src/setup/dto/sync-db.dto';
 import { DefaultNotificationSubscriptions } from 'src/notifications/data/default-subscriptions.data';
@@ -32,7 +32,7 @@ import { generatePasswordResetCode } from 'src/auth/utils/auto-generate-password
 import { AccountCreatedPatientEmailTemplate } from 'src/patients/email-templates/account-created.template';
 import { PasswordResetOTPTemplate } from 'src/auth/email-templates/password-reset-otp.template';
 import { OtpService } from 'src/otp/services/otp.service';
-import { OTPInterface } from 'src/otp/interfaces/otp.interface';
+import { OTP } from 'src/otp/interfaces/otp.interface';
 import { OTPUseEnum } from 'src/otp/enums/otp-use.enum';
 import { GeneratePasswordResetOTPHelper } from 'src/shared/helpers/generate-otp.helper';
 import { PasswordResetSuccessEmailTemplate } from 'src/auth/email-templates/password-reset-success.template';
@@ -42,7 +42,7 @@ export class UserAutomationService {
   /**
    * Creates an instance of UserAutomationService.
    
-   * @param {Model<UserInterface>} user
+   * @param {Model<User>} user
    * @param {NotificationsService} notificationsService
    * @param {AuthorizationService} authorizationService
    * @param {UsersService} usersService
@@ -52,7 +52,7 @@ export class UserAutomationService {
    */
   constructor(
     @Inject(DatabaseModelEnums.USER_MODEL)
-    private readonly user: Model<UserInterface>,
+    private readonly user: Model<User>,
     private readonly notificationsService: NotificationsService,
     private readonly settingsService: SettingsService,
     private readonly authorizationService: AuthorizationService,
@@ -76,7 +76,7 @@ export class UserAutomationService {
     try {
       const filter = { _id: data.payload.reference };
       const payload: {
-        signature: GCSFileResponseInterface;
+        signature: GCSFileResponse;
         updatedBy: string;
         updatedAt: Date;
       } = {
@@ -108,15 +108,12 @@ export class UserAutomationService {
    *
    * @param {{
    *     settings: any;
-   *     user: UserInterface;
+   *     user: User;
    *   }} payload
    * @memberof UsersController
    */
   @OnEvent(SystemEventsEnum.UserAccountCreated, { async: true })
-  sendEmailOnUserRegisterEvent(payload: {
-    settings: any;
-    user: UserInterface;
-  }) {
+  sendEmailOnUserRegisterEvent(payload: { settings: any; user: User }) {
     const { user, settings } = payload;
     const { isBackOfficeUser, patientId } = user;
 
@@ -127,7 +124,7 @@ export class UserAutomationService {
         ? 'Patient Account'
         : 'Employee Account';
     // prepare the payload
-    const mail: SendEmailInterface = {
+    const mail: SendEmail = {
       html: isBackOfficeUser
         ? { template: '' }
         : AccountCreatedPatientEmailTemplate(settings, user),
@@ -165,7 +162,7 @@ export class UserAutomationService {
   @OnEvent(SystemEventsEnum.EmployeeAccountCreated, { async: true })
   sendEmailOnEmployeeRegisterEvent(payload: { settings: any; user: any }) {
     const { user, settings } = payload;
-    const mail: SendEmailInterface = {
+    const mail: SendEmail = {
       html: EmployeeAccountCreatedEmailTemplate(settings, user),
       recipient: user.email,
       textAlignment: 'left',
@@ -189,12 +186,11 @@ export class UserAutomationService {
   async syncAdminUser(payload: SyncSuperAdminDto): Promise<CustomHttpResponse> {
     try {
       // Get the id of the admin role
-      const roles: RoleInterface[] = (
-        await this.authorizationService.getAllRoles()
-      ).data;
+      const roles: Role[] = (await this.authorizationService.getAllRoles())
+        .data;
 
       if (roles.length > 0) {
-        const role: RoleInterface = roles.find((ro: RoleInterface) => {
+        const role: Role = roles.find((ro: Role) => {
           return ro.role === RolesEnum.SuperAdminRole;
         });
 
@@ -296,7 +292,7 @@ export class UserAutomationService {
   @OnEvent(SystemEventsEnum.SuperUserAccountCreated, { async: true })
   sendEmailOnSuperUserRegisterEvent(payload: { user: RegisterEmployeeDto }) {
     const { user } = payload;
-    const mail: SendEmailInterface = {
+    const mail: SendEmail = {
       html: SuperUserAccountCreatedEmailTemplate(user),
       recipient: user.email,
       textAlignment: 'left',
@@ -308,8 +304,8 @@ export class UserAutomationService {
 
   @OnEvent(SystemEventsEnum.PasswordResetRequested, { async: true })
   async sendPasswordResetEmail(payload: {
-    user: UserInterface;
-    settings: SettingsInterface;
+    user: User;
+    settings: Settings;
     useOTP: boolean;
   }) {
     const { user, settings, useOTP } = payload;
@@ -317,7 +313,7 @@ export class UserAutomationService {
       this.configService.get('FRONTEND_URL') || settings.appURL;
     const resetLink = `${frontendRootURL}/auth/update-password/${user.resetPasswordToken.toString()}`;
 
-    const mail: SendEmailInterface = {
+    const mail: SendEmail = {
       html: PasswordResetLinkTemplate(settings, user, resetLink),
       recipient: user.email,
       textAlignment: 'left',
@@ -326,7 +322,7 @@ export class UserAutomationService {
     };
     if (useOTP) {
       const { code, expiry } = GeneratePasswordResetOTPHelper();
-      const otp: OTPInterface = await this.otpService.generatePasswordResetOTP({
+      const otp: OTP = await this.otpService.generatePasswordResetOTP({
         otp: {
           code,
           email: user.email,
@@ -346,16 +342,14 @@ export class UserAutomationService {
   /**
    * Send email to user on password reset success
    *
-   * @param {UserInterface} user
+   * @param {User} user
    * @memberof UserAutomationService
    */
   @OnEvent(SystemEventsEnum.PASSWORD_RESET_SUCCESS, { async: true })
-  async sendPasswordResetSuccessEmail(user: UserInterface) {
-    const settings: SettingsInterface = (
-      await this.settingsService.getSettings()
-    ).data;
+  async sendPasswordResetSuccessEmail(user: User) {
+    const settings: Settings = (await this.settingsService.getSettings()).data;
 
-    const mail: SendEmailInterface = {
+    const mail: SendEmail = {
       html: PasswordResetSuccessEmailTemplate(settings, user),
       recipient: user.email,
       textAlignment: 'left',
@@ -371,7 +365,7 @@ export class UserAutomationService {
   @OnEvent(SystemEventsEnum.SuperUserAccountCreated, {
     async: true,
   })
-  async setPasswordResetToken(user: UserInterface) {
+  async setPasswordResetToken(user: User) {
     const passwordResetCode: string = generatePasswordResetCode(user._id);
 
     await this.user.findByIdAndUpdate(user._id, {

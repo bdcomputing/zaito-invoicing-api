@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import Strategy from 'passport-magic-login';
 import { NotificationsService } from 'src/notifications/services/notifications.service';
-import { SendEmailInterface } from 'src/notifications/interfaces/email.interface';
+import { SendEmail } from 'src/notifications/interfaces/email.interface';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/services/users.service';
 import { MagicLoginPayload } from '../interfaces/magic-login-payload.interface';
 import { MagicLoginLinkTemplate } from 'src/auth/email-templates/magic-link.template';
 import { SettingsService } from '../../settings/services/settings.service';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 
 @Injectable()
 export class MagicLoginStrategy extends PassportStrategy(Strategy) {
@@ -34,10 +34,10 @@ export class MagicLoginStrategy extends PassportStrategy(Strategy) {
         const settings = (await this.settingsService.getSettings()).data;
         const res = (await this.usersService.getUserUsingEmail(destination))
           .data;
-        const user: UserInterface = res.user;
+        const user: User = res.user;
 
         // send the email to the user
-        const mail: SendEmailInterface = {
+        const mail: SendEmail = {
           subject: 'Magic Login Link',
           recipient: destination,
           textAlignment: 'left',

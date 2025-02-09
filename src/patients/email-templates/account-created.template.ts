@@ -1,18 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { UserInterface } from 'src/users/interfaces/user.interface';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { User } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 
 /**
  * Returns a template for a patient account created email notification.
  *
- * @param {SettingsInterface} settings - The application settings.
- * @param {UserInterface} user - The user to send the email to.
+ * @param {Settings} settings - The application settings.
+ * @param {User} user - The user to send the email to.
  *
  * @returns {Object} An object containing HTML and CSS for the email template.
  */
 export const AccountCreatedPatientEmailTemplate = (
-  settings: SettingsInterface,
-  user: UserInterface,
+  settings: Settings,
+  user: User,
 ) => {
   const css = '';
   const template = `
