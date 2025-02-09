@@ -21,6 +21,26 @@ export class CreateInvoiceDto {
   @ValidateNested({ each: true })
   @Type(() => InvoiceItemDto)
   items: InvoiceItemDto[];
+
+  @IsNotEmpty()
+  @IsString()
+  claimCode: string;
+
+  @IsNotEmpty()
+  @IsString()
+  principalMember: string;
+
+  @IsNotEmpty()
+  @IsString()
+  relationship: string;
+
+  @IsNotEmpty()
+  @IsString()
+  coverNumber: string;
+
+  @IsNotEmpty()
+  @IsString()
+  department: string;
 }
 
 export class PostInvoiceDto {
@@ -31,6 +51,26 @@ export class PostInvoiceDto {
   @IsOptional()
   @IsString()
   narration?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  claimCode: string;
+
+  @IsNotEmpty()
+  @IsString()
+  principalMember: string;
+
+  @IsNotEmpty()
+  @IsString()
+  relationship: string;
+
+  @IsNotEmpty()
+  @IsString()
+  coverNumber: string;
+
+  @IsNotEmpty()
+  @IsString()
+  department: string;
 
   @IsNotEmpty()
   @IsNumber()

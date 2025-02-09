@@ -12,4 +12,11 @@ export interface InvoicePaymentInterface {
   createdAt: Date;
   createdBy: string;
   paymentChannel: string;
+
+  // Insurance related
+  claimCode: string;
+  principalMember: string;
+  relationship: string;
+  coverNumber: string;
+  department: string;
 }

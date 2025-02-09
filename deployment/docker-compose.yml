@@ -1,5 +1,5 @@
 services:
-  invoicing-web:
+  invoice_web:
     image: ghcr.io/bdcomputing/zaito-invoicing-web-app:latest
     container_name: invoicing-web-app
     env_file:
@@ -8,13 +8,13 @@ services:
       - $FRONTEND_PORT:80
     restart: always
     depends_on:
-      - api
+      - invoice_api
     networks:
       - app_network
     pull_policy: always
     
    # NEST SERVER
-  api:
+  invoice_api:
     image: ghcr.io/bdcomputing/zaito-invoicing-api:latest
     user: root
     container_name: api

@@ -6,6 +6,15 @@ export const InvoiceSchema = new mongoose.Schema({
   serial: { type: String, required: false, trim: true },
   narration: { type: String, required: false, trim: true },
   clientId: { type: String, required: true, trim: true },
+
+  // Insurance related
+  claimCode: { type: String, required: true, trim: true },
+  principalMember: { type: String, required: true, trim: true },
+  relationship: { type: String, required: true, trim: true },
+  coverNumber: { type: String, required: true, trim: true },
+  department: { type: String, required: true, trim: true },
+
+  // Amount
   subTotal: { type: Number, required: true, default: 0, trim: true },
   vatAmount: { type: Number, required: true, default: 0, trim: true },
   vatRate: { type: Number, required: true, default: 0, trim: true },

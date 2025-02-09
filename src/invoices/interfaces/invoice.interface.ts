@@ -13,6 +13,14 @@ export interface InvoiceInterface {
   totalAmount: number;
   paidAmount: number;
   balance: number;
+
+  // Insurance related
+  claimCode: string;
+  principalMember: string;
+  relationship: string;
+  coverNumber: string;
+  department: string;
+
   createdBy: string;
   createdAt: Date;
 

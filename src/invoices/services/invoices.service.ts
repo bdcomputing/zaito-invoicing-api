@@ -42,7 +42,18 @@ export class InvoicesService {
     userId: string,
   ): Promise<CustomHttpResponse> {
     try {
-      const { items, clientId, narration } = createInvoiceDto;
+      console.log(createInvoiceDto);
+      const {
+        items,
+        clientId,
+        narration,
+        claimCode,
+        principalMember,
+        relationship,
+        coverNumber,
+        department,
+      } = createInvoiceDto;
+
       const payload: PostInvoiceDto = {
         clientId,
         subTotal: 0,
@@ -51,6 +62,11 @@ export class InvoicesService {
         totalAmount: 0,
         createdBy: userId,
         balance: 0,
+        claimCode,
+        principalMember,
+        relationship,
+        coverNumber,
+        department,
       };
 
       // prepare the invoice
