@@ -17,7 +17,7 @@ services:
   invoice_api:
     image: ghcr.io/bdcomputing/zaito-invoicing-api:latest
     user: root
-    container_name: api
+    container_name: invoice_api
     env_file:
       - .env
     ports:
@@ -27,16 +27,16 @@ services:
 
     restart: always
     depends_on:
-      - redis
+      - redis_zaito
     command: npm run start:prod
 
   # REDIS
-  redis:
+  redis_zaito:
     build:
       context: .
       dockerfile: Dockerfile.redis
     image: redis:7.2-alpine
-    container_name: redis
+    container_name: redis_zaito
     restart: always
     networks:
       - app_network
@@ -50,22 +50,22 @@ services:
     # Run as privileged to allow the container to change the vm.overcommit_memory setting
     privileged: true
     volumes:
-      - ./docker/data/redis:/data
+      - ./docker/data/redis_zaito:/data
 
   # REDIS INSIGHT
-  redis_insight:
-    image: redislabs/redisinsight:1.14.0
-    user: root
-    container_name: redis_insight
-    restart: always
-    ports:
-      - 8001:8001
-    volumes:
-      - ./docker/data/redis_insight:/db
-    networks:
-      - app_network
-    depends_on:
-      - redis
+  # redis_insight:
+  #   image: redislabs/redisinsight:1.14.0
+  #   user: root
+  #   container_name: redis_insight
+  #   restart: always
+  #   ports:
+  #     - 8001:8001
+  #   volumes:
+  #     - ./docker/data/redis_insight:/db
+  #   networks:
+  #     - app_network
+  #   depends_on:
+  #     - redis_zaito
    # MONGO DB
   mongodb:
     image: mongo:6-jammy
@@ -81,7 +81,7 @@ networks:
     driver: bridge
 # VOLUME CONFIG
 volumes:
-  redis:
+  redis_zaito:
     driver: local
   redis_insight_volume_data:
     driver: local
