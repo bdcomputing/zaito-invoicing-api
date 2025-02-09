@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
-import { InvoiceInterface } from 'src/invoices/interfaces/invoice.interface';
+import { Invoice } from 'src/invoices/interfaces/invoice.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 
@@ -9,7 +9,7 @@ import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 export class InvoiceReportsService {
   constructor(
     @Inject(DatabaseModelEnums.INVOICE_MODEL)
-    private invoices: Model<InvoiceInterface>,
+    private invoices: Model<Invoice>,
   ) {}
 
   async getLatestInvoicesReports(limit?: number) {

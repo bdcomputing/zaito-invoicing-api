@@ -10,7 +10,7 @@ import {
   UpdateCompanyAccountDto,
   PostCompanyAccountUpdateDto,
 } from 'src/company-accounts/dto/update-company-account.dto';
-import { CompanyAccountInterface } from 'src/company-accounts/interfaces/company-account.interface';
+import { CompanyAccount } from 'src/company-accounts/interfaces/company-account.interface';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { CustomHttpResponse } from 'src/shared';
@@ -23,12 +23,12 @@ export class CompanyAccountsService {
 
   /**
    * Creates an instance of CompanyAccountsService.
-   * @param {Model<CompanyAccountInterface>} companyAccounts
+   * @param {Model<CompanyAccount>} companyAccounts
    * @memberof CompanyAccountsService
    */
   constructor(
     @Inject(DatabaseModelEnums.COMPANY_ACCOUNT_MODEL)
-    private companyAccounts: Model<CompanyAccountInterface>,
+    private companyAccounts: Model<CompanyAccount>,
   ) {}
 
   @OnEvent(SystemEventsEnum.SyncDatabase, { async: true })

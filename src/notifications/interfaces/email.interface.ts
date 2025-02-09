@@ -1,4 +1,4 @@
-export interface SendEmailInterface {
+export interface SendEmail {
   html: { template: string };
   subject: string;
   recipient: string;

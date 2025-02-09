@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SMSDto } from '../dto/sms.dto';
-import { SendEmailInterface } from '../interfaces/email.interface';
+import { SendEmail } from '../interfaces/email.interface';
 import { MailService } from './mail/mail.service';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { TestEmailTemplate } from '../templates/test/test-mail.template';
@@ -37,13 +37,11 @@ export class NotificationsService {
    */
   async sendTestEmails(emails: string[]): Promise<CustomHttpResponse> {
     // Get Settings from database
-    const settings: SettingsInterface = (
-      await this.settingsService.getSettings()
-    ).data;
+    const settings: Settings = (await this.settingsService.getSettings()).data;
     for (let i = 0; i < emails.length; i++) {
       const email = emails[i];
       // Get User
-      const mail: SendEmailInterface = {
+      const mail: SendEmail = {
         html: TestEmailTemplate({ settings, email }),
         recipient: email,
         textAlignment: 'left',
@@ -64,11 +62,11 @@ export class NotificationsService {
   /**
    * Dispatch Email
    *
-   * @param {SendEmailInterface} mail
+   * @param {SendEmail} mail
    * @return {*}
    * @memberof NotificationsService
    */
-  async dispatchEmail(mail: SendEmailInterface) {
+  async dispatchEmail(mail: SendEmail) {
     // send email to client
     try {
       return await this.mailService.sendEmail(mail);
@@ -100,7 +98,7 @@ export class NotificationsService {
    */
   // async sendDemoWhatsAppMessage(): Promise<CustomHttpResponse> {
   //   try {
-  //     const settings: SettingsInterface = (
+  //     const settings: Settings = (
   //       await this.settingsService.getSettings()
   //     ).data;
   //     const data = this.whatsappService.getTextMessageInput(
@@ -132,7 +130,7 @@ export class NotificationsService {
    */
   // async sendWhatsAppMessage(data: any) {
   //   try {
-  //     const settings: SettingsInterface = await (
+  //     const settings: Settings = await (
   //       await this.settingsService.getSettings()
   //     ).data;
   //     return this.whatsappService.sendMessage(data, settings.facebookApp);

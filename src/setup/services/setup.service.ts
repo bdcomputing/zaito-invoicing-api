@@ -6,7 +6,7 @@ import { SettingsService } from 'src/settings/services/settings.service';
 import { SyncSuperAdminDto } from 'src/setup/dto/sync-db.dto';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { UserAutomationService } from 'src/users/services/user-automation.service';
 import { UsersService } from 'src/users/services/users.service';
 
@@ -49,12 +49,10 @@ export class SetupService {
       }
 
       // get all the users
-      const users: UserInterface[] | null = (
-        await this.usersService.getAllUsers()
-      ).data;
-      let user: UserInterface | null | undefined;
+      const users: User[] | null = (await this.usersService.getAllUsers()).data;
+      let user: User | null | undefined;
       if (users && users.length > 0) {
-        user = users.find((user: UserInterface) => {
+        user = users.find((user: User) => {
           return user.email === payload.email;
         });
       } else {

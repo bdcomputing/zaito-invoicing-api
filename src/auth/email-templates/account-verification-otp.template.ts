@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { UserInterface } from 'src/users/interfaces/user.interface';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
-import { OTPInterface } from 'src/otp/interfaces/otp.interface';
+import { User } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
+import { OTP } from 'src/otp/interfaces/otp.interface';
 
 export const AccountVerificationOTPTemplate = (
-  settings: SettingsInterface,
-  user: UserInterface,
-  otp: OTPInterface,
+  settings: Settings,
+  user: User,
+  otp: OTP,
 ) => {
   const css = '';
   const template = `

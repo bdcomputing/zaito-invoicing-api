@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsPhoneNumber, IsEmail } from 'class-validator';
-import { GCSFileResponseInterface } from '../interfaces/gcs-file.interface';
-import { AddressInterface } from 'src/settings/interfaces/settings.interface';
+import { GCSFileResponse } from '../interfaces/gcs-file.interface';
+import { Address } from 'src/settings/interfaces/settings.interface';
 
 export class UploadLogoToGCSDto {
   @IsString()
@@ -24,11 +24,11 @@ export class UploadLogoToGCSDto {
   KRA: string;
 
   @IsNotEmpty()
-  address: AddressInterface;
+  address: Address;
 }
 export class LogoUploadedResponseDto {
   @IsNotEmpty()
-  metadata: GCSFileResponseInterface;
+  metadata: GCSFileResponse;
 
   @IsNotEmpty()
   payload: UploadLogoToGCSDto;

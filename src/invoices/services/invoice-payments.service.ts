@@ -6,23 +6,23 @@
 // import { CustomHttpResponse } from 'src/shared';
 // import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 // import { CreateInvoicePaymentDto } from 'src/invoices/dto/create-invoice-payment.dto';
-// import { InvoicePaymentInterface } from 'src/invoices/interfaces/invoice-payment.interface';
-// import { InvoiceInterface } from 'src/invoices/interfaces/invoice.interface';
+// import { InvoicePayment } from 'src/invoices/interfaces/invoice-payment.interface';
+// import { Invoice } from 'src/invoices/interfaces/invoice.interface';
 
 // @Injectable()
 // export class InvoicePaymentsService {
 //   /**
 //    * Creates an instance of InvoicePaymentsService.
-//    * @param {Model<InvoicePaymentInterface>} invoicePayments
-//    * @param {Model<InvoiceInterface>} invoice
+//    * @param {Model<InvoicePayment>} invoicePayments
+//    * @param {Model<Invoice>} invoice
 //    * @param {EventEmitter2} eventEmitter
 //    * @memberof InvoicePaymentsService
 //    */
 //   constructor(
 //     @Inject(DatabaseModelEnums.RECEIPTS_MODEL)
-//     private readonly invoicePayments: Model<InvoicePaymentInterface>,
+//     private readonly invoicePayments: Model<InvoicePayment>,
 //     @Inject(DatabaseModelEnums.INVOICE_MODEL)
-//     private readonly invoice: Model<InvoiceInterface>,
+//     private readonly invoice: Model<Invoice>,
 //     private readonly eventEmitter: EventEmitter2,
 //   ) {
 //     //
@@ -33,7 +33,7 @@
 //    *
 //    * @param {{
 //    *     userId: string;
-//    *     receipt: PaymentAllocationReceiptInterface;
+//    *     receipt: PaymentAllocationReceipt;
 //    *   }} data
 //    * @memberof InvoicePaymentsService
 //    */
@@ -41,7 +41,7 @@
 //   @OnEvent(SystemEventsEnum.AllocationReceiptUpdated, { async: true })
 //   async createInvoicePaymentEntry(data: {
 //     userId: string;
-//     receipt: PaymentAllocationReceiptInterface;
+//     receipt: PaymentAllocationReceipt;
 //   }) {
 //     const { receipt } = data;
 //     const allocations = data.receipt.allocation || [];
@@ -114,10 +114,10 @@
 //     const { invoiceId, userId } = data;
 
 //     // get all the payments for the invoice
-//     const payments: InvoicePaymentInterface[] = await this.invoicePayments
+//     const payments: InvoicePayment[] = await this.invoicePayments
 //       .find({ invoiceId })
 //       .exec();
-//     const invoice: InvoiceInterface = await this.invoice
+//     const invoice: Invoice = await this.invoice
 //       .findById(invoiceId)
 //       .exec();
 
@@ -143,7 +143,7 @@
 
 //   async getInvoicePayments(invoiceId: string): Promise<CustomHttpResponse> {
 //     try {
-//       const payments: InvoicePaymentInterface[] = await this.invoicePayments
+//       const payments: InvoicePayment[] = await this.invoicePayments
 //         .find({ invoiceId })
 //         .exec();
 
@@ -165,7 +165,7 @@
 //     receiptId: string,
 //   ): Promise<CustomHttpResponse> {
 //     try {
-//       const payments: InvoicePaymentInterface[] = await this.invoicePayments
+//       const payments: InvoicePayment[] = await this.invoicePayments
 //         .find({ receiptId })
 //         .exec();
 

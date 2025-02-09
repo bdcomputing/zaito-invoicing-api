@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SettingsService } from '../../../settings/services/settings.service';
 import * as nodemailer from 'nodemailer';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
-import { SendEmailInterface } from 'src/notifications/interfaces/email.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
+import { SendEmail } from 'src/notifications/interfaces/email.interface';
 import { mailFooterTemplate } from 'src/notifications/templates/partials/mail-footer.template';
 import { mailHeaderTemplate } from 'src/notifications/templates/partials/mail-header.template';
 import { CustomHttpResponse } from 'src/shared';
@@ -22,11 +22,11 @@ export class MailService {
    *
    * @return {*}  {(Promise<{
    *     transporter: nodemailer.Transporter | undefined;
-   *     settings: SettingsInterface | undefined;
+   *     settings: Settings | undefined;
    *   }>)}
    * @memberof MailService
    */
-  async authorizeMail(settings: SettingsInterface): Promise<{
+  async authorizeMail(settings: Settings): Promise<{
     transporter: nodemailer.Transporter | undefined;
   }> {
     try {
@@ -60,14 +60,14 @@ export class MailService {
   /**
    * Send Email
    *
-   * @param {SendEmailInterface} mail
+   * @param {SendEmail} mail
    * @return {*}
    * @memberof MailService
    */
-  async sendEmail(mail: SendEmailInterface): Promise<CustomHttpResponse> {
+  async sendEmail(mail: SendEmail): Promise<CustomHttpResponse> {
     try {
       // Get Settings from the database
-      const settings: SettingsInterface | undefined = (
+      const settings: Settings | undefined = (
         await this.settingsService.getSettings()
       ).data;
       // get settings from db and authorize mail

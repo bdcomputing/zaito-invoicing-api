@@ -1,7 +1,7 @@
-export interface CreatePermissionInterface {
+export interface CreatePermission {
   permission: string;
 }
 
-export interface PermissionInterface extends CreatePermissionInterface {
+export interface Permission extends CreatePermission {
   _id: string;
 }

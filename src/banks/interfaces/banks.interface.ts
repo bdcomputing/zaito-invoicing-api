@@ -1,13 +1,13 @@
-export interface BankBranchInterface {
+export interface BankBranch {
   name: string;
   code?: string;
 }
-export interface CreateBankInterface {
+export interface CreateBank {
   name: string;
-  branches?: BankBranchInterface[];
+  branches?: BankBranch[];
   bank_code?: string;
 }
-export interface BankInterface extends CreateBankInterface {
+export interface Bank extends CreateBank {
   _id: string;
   createdBy: string;
   createdAt: Date;

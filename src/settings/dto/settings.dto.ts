@@ -6,7 +6,7 @@ import {
   IsObject,
   IsNotEmpty,
 } from 'class-validator';
-import { StorageSettingsInterface } from '../interfaces/settings.interface';
+import { StorageSettings } from '../interfaces/settings.interface';
 
 export class AddressDto {
   @IsNotEmpty()
@@ -84,7 +84,7 @@ export class CreateSettingsDTO {
   appURL: string;
 
   @IsObject()
-  storage: StorageSettingsInterface;
+  storage: StorageSettings;
 
   @IsOptional()
   @IsNumber()

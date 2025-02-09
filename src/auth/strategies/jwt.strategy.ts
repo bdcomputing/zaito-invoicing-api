@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtRefreshTokenStrategy } from './jwt-refresh-token.strategy';
 import { UsersService } from 'src/users/services/users.service';
-import { JwtPayloadInterface } from 'src/auth/interfaces/jwt-payload.interface';
+import { JwtPayload } from 'src/auth/interfaces/jwt-payload.interface';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -24,12 +24,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   /**
    * Validate the user using the payload of the JWT token.
-   * @param {JwtPayloadInterface} payload - The payload of the JWT token.
+   * @param {JwtPayload} payload - The payload of the JWT token.
    * @return {Promise<any>} - The user if found, otherwise an UnauthorizedException is thrown.
    * @throws {UnauthorizedException} - If the user is not found.
    * @memberof JwtStrategy
    */
-  async validate(payload: JwtPayloadInterface): Promise<any> {
+  async validate(payload: JwtPayload): Promise<any> {
     const user = await this.usersService.findOne(
       payload.sub as unknown as string,
     );

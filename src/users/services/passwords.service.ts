@@ -12,9 +12,9 @@ import {
   UpdatePasswordWithOTPDto,
   UpdatePasswordWithTokenDto,
 } from 'src/users/dto/update-password.dto';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { SettingsService } from '../../settings/services/settings.service';
-import { OTPInterface } from 'src/otp/interfaces/otp.interface';
+import { OTP } from 'src/otp/interfaces/otp.interface';
 import { ResetPasswordDTO } from 'src/auth/dtos/reset-password.dto';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { JwtService } from '@nestjs/jwt';
@@ -23,7 +23,7 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class PasswordService {
   constructor(
-    @Inject(DatabaseModelEnums.USER_MODEL) private user: Model<UserInterface>,
+    @Inject(DatabaseModelEnums.USER_MODEL) private user: Model<User>,
     private readonly settingsService: SettingsService,
     private readonly otpService: OtpService,
     private readonly usersService: UsersService,
@@ -41,7 +41,7 @@ export class PasswordService {
     const { email, useOTP } = payload;
     const res = (await this.usersService.getUserUsingEmail(email)).data;
     if (res && res.user) {
-      const user: UserInterface = res.user;
+      const user: User = res.user;
       const settings = (await this.settingsService.getSettings()).data;
 
       const token = await this.jwtService.signAsync(
@@ -84,7 +84,7 @@ export class PasswordService {
   ): Promise<CustomHttpResponse> {
     try {
       // get the user using the password reset token
-      const user: UserInterface | undefined = await this.user
+      const user: User | undefined = await this.user
         .findOne({ resetPasswordToken })
         .exec();
 
@@ -114,7 +114,7 @@ export class PasswordService {
     try {
       const { resetPasswordToken } = data;
       // get the user using the password reset token
-      const user: UserInterface | undefined = await this.user
+      const user: User | undefined = await this.user
         .findOne({ resetPasswordToken })
         .exec();
 
@@ -145,7 +145,7 @@ export class PasswordService {
     try {
       const { code } = payload;
 
-      const otp: OTPInterface | undefined = await (
+      const otp: OTP | undefined = await (
         await this.otpService.findByCode(code)
       ).data;
 
@@ -160,7 +160,7 @@ export class PasswordService {
       const resetPasswordToken = otp.token;
 
       // get the user using the password reset token
-      const user: UserInterface | undefined = await this.user
+      const user: User | undefined = await this.user
         .findOne({ resetPasswordToken })
         .exec();
 
@@ -188,7 +188,7 @@ export class PasswordService {
     try {
       const { passwordResetCode } = data;
       // get the user using the password reset token
-      const user: UserInterface | undefined = await this.user
+      const user: User | undefined = await this.user
         .findOne({ passwordResetCode })
         .exec();
 

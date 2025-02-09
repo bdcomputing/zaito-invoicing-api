@@ -1,4 +1,4 @@
-export interface GCSFileResponseInterface {
+export interface GCSFileResponse {
   kind?: string;
   id?: string;
   selfLink?: string;

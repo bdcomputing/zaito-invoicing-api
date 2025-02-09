@@ -1,4 +1,4 @@
-export interface InvoicePaymentInterface {
+export interface InvoicePayment {
   _id: string;
   receiptId: string;
   narration: string;

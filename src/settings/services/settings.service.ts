@@ -1,10 +1,7 @@
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { defaultSettings } from '../data/settings.data';
 import { Model } from 'mongoose';
-import {
-  SettingsInterface,
-  SystemSettingsInterface,
-} from '../interfaces/settings.interface';
+import { Settings, SystemSettings } from '../interfaces/settings.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -21,13 +18,13 @@ export class SettingsService implements OnModuleInit {
   private readonly logger = new Logger(SettingsService.name);
   /**
    * Creates an instance of SettingsService.
-   * @param {Model<SettingsInterface>} settings
+   * @param {Model<Settings>} settings
    * @memberof SettingsService
    */
   constructor(
     @Inject('CACHE_MANAGER') private readonly cacheManager: Cache,
     @Inject(DatabaseModelEnums.SETTING_MODEL)
-    private readonly settings: Model<SettingsInterface>,
+    private readonly settings: Model<Settings>,
   ) {}
   /**
    * Initialize the settings service on Module Init
@@ -61,7 +58,7 @@ export class SettingsService implements OnModuleInit {
       userId = d.userId;
     }
 
-    const payload: SettingsInterface = defaultData as any;
+    const payload: Settings = defaultData as any;
     payload.appURL = appUrl ? appUrl : defaultData.appURL;
     payload.createdBy = userId;
     if (settings.length === 0) {
@@ -98,13 +95,13 @@ export class SettingsService implements OnModuleInit {
    *
    * @param {string} id
    * @param {UpdateGeneralSettingsDto} payload
-   * @return {*}  {Promise<SettingsInterface>}
+   * @return {*}  {Promise<Settings>}
    * @memberof SettingsService
    */
   async updateGeneralSettings(
     payload: UpdateGeneralSettingsDto,
   ): Promise<CustomHttpResponse> {
-    const settings: SettingsInterface = (await this.getSettings()).data;
+    const settings: Settings = (await this.getSettings()).data;
     const id = (await this.getSettings()).data._id;
     let general = settings.general;
     general = { ...general, ...payload };
@@ -134,13 +131,13 @@ export class SettingsService implements OnModuleInit {
    *
    * @param {string} id
    * @param {UpdateEmailSettingsDto} payload
-   * @return {*}  {Promise<SettingsInterface>}
+   * @return {*}  {Promise<Settings>}
    * @memberof SettingsService
    */
   async updateEmailSettings(
     payload: UpdateEmailSettingsDto,
   ): Promise<CustomHttpResponse> {
-    const settings: SettingsInterface = (await this.getSettings()).data;
+    const settings: Settings = (await this.getSettings()).data;
     const id = (await this.getSettings()).data._id;
     let mail = settings.mail;
     mail = { ...mail, ...payload };
@@ -170,13 +167,13 @@ export class SettingsService implements OnModuleInit {
    *
    * @param {string} id
    * @param {UpdateBrandingSettingsDto} payload
-   * @return {*}  {Promise<SettingsInterface>}
+   * @return {*}  {Promise<Settings>}
    * @memberof SettingsService
    */
   async updateBrandingSettings(
     payload: UpdateBrandingSettingsDto,
   ): Promise<CustomHttpResponse> {
-    const settings: SettingsInterface = (await this.getSettings()).data;
+    const settings: Settings = (await this.getSettings()).data;
     const id = (await this.getSettings()).data._id;
     let mail = settings.mail;
     mail = { ...mail, ...payload };
@@ -204,7 +201,7 @@ export class SettingsService implements OnModuleInit {
   async updateCompanyLogo(
     response: LogoUploadedResponseDto,
   ): Promise<CustomHttpResponse> {
-    const settings: SystemSettingsInterface = (await this.getSettings()).data;
+    const settings: SystemSettings = (await this.getSettings()).data;
 
     if (settings) {
       settings.branding.logo = response.metadata.mediaLink;
@@ -224,12 +221,12 @@ export class SettingsService implements OnModuleInit {
     }
   }
 
-  async updateCache(settings?: SettingsInterface) {
-    let data: SettingsInterface | null = null;
+  async updateCache(settings?: Settings) {
+    let data: Settings | null = null;
     if (settings) {
       data = settings;
     } else {
-      const _settings: SettingsInterface[] = await this.settings.find().exec();
+      const _settings: Settings[] = await this.settings.find().exec();
       if (_settings.length > 0) {
         data = _settings[0];
       }

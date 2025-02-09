@@ -4,7 +4,7 @@ import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { CustomHttpResponse } from 'src/shared';
 import { GenericResponse } from 'src/shared/decorators/generic-response.decorator';
 import { ManageMagicLoginDto } from '../dto/update-magic-login.dto';
-import { UserInterface } from '../interfaces/user.interface';
+import { User } from '../interfaces/user.interface';
 import { AuthLogsService } from 'src/logger/services/auth-logs.service';
 import { DefaultShippingAddressDto } from '../dto/update-shipping-address.dto';
 
@@ -58,7 +58,7 @@ export class AccountController {
     @Body() body: ManageMagicLoginDto,
     @GenericResponse() res: GenericResponse,
   ): Promise<CustomHttpResponse> {
-    const user: UserInterface = req.user;
+    const user: User = req.user;
     const { _id } = user;
     // update magic login status
     const response = await this.usersService.manageMagicLogin(_id, body, _id);
@@ -82,7 +82,7 @@ export class AccountController {
     @Body() body: DefaultShippingAddressDto,
     @GenericResponse() res: GenericResponse,
   ): Promise<CustomHttpResponse> {
-    const user: UserInterface = req.user;
+    const user: User = req.user;
     const { _id } = user;
     // update shipping address
     const response = await this.usersService.updateShippingAddress(

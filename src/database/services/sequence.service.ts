@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
-import { SequenceInterface } from 'src/database/interfaces/sequence.interface';
+import { Sequence } from 'src/database/interfaces/sequence.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
@@ -16,7 +16,7 @@ export class SequenceService {
    */
   constructor(
     @Inject(DatabaseModelEnums.SEQUENCE_MODEL)
-    private sequence: Model<SequenceInterface>,
+    private sequence: Model<Sequence>,
   ) {}
 
   /**
@@ -25,7 +25,7 @@ export class SequenceService {
    * @param id - The ID of the sequence to find.
    * @returns A promise resolving to the sequence with the given ID.
    */
-  async findById(id: string): Promise<SequenceInterface> {
+  async findById(id: string): Promise<Sequence> {
     return await this.sequence.findById(id);
   }
 
@@ -33,11 +33,11 @@ export class SequenceService {
    * Handles the SyncSuperUserAccount event.
    * Checks if there are any existing sequences, and creates a new one if none exist.
    * The new sequence is created with an empty payload.
-   * Returns a promise containing the created SequenceInterface.
+   * Returns a promise containing the created Sequence.
    */
   @OnEvent(SystemEventsEnum.SyncSuperUserAccount, { async: true })
-  async create(): Promise<SequenceInterface> {
-    const sequences: SequenceInterface[] = await this.sequence.find().exec();
+  async create(): Promise<Sequence> {
+    const sequences: Sequence[] = await this.sequence.find().exec();
     if (sequences.length === 0) {
       const payload: any = {};
       return await this.sequence.create(payload);
@@ -80,8 +80,8 @@ export class SequenceService {
    */
   async getSequence() {
     try {
-      const sequences: SequenceInterface[] = await this.sequence.find().exec();
-      let sequence: SequenceInterface;
+      const sequences: Sequence[] = await this.sequence.find().exec();
+      let sequence: Sequence;
       if (!sequences.length) {
         sequence = await this.create();
       } else {

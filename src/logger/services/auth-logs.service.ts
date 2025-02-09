@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
-import { AuthLogInterface } from '../interfaces/auth-log.interface';
+import { AuthLog } from '../interfaces/auth-log.interface';
 import { CreateAuthLogDto, PostAuthLogDto } from '../dto/auth-log.dto';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
-import { UserInterface } from '../../users/interfaces/user.interface';
+import { User } from '../../users/interfaces/user.interface';
 import { ExpressQuery } from 'src/shared/utils/express-query.util';
 import { CustomHttpResponse } from 'src/shared';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { RequestLogHelper } from 'src/shared/utils/req-log-helper';
 
@@ -16,15 +16,15 @@ import { RequestLogHelper } from 'src/shared/utils/req-log-helper';
 export class AuthLogsService {
   /**
    * Creates an instance of AuthLogsService.
-   * @param {Model<AuthLogInterface>} logs
-   * @param {Model<UserInterface>} user
+   * @param {Model<AuthLog>} logs
+   * @param {Model<User>} user
    * @memberof AuthLogsService
    */
   constructor(
     @Inject(DatabaseModelEnums.AUTH_LOG_MODEL)
-    private logs: Model<AuthLogInterface>,
+    private logs: Model<AuthLog>,
     @Inject(DatabaseModelEnums.USER_MODEL)
-    private user: Model<UserInterface>,
+    private user: Model<User>,
   ) {}
 
   /**
@@ -40,9 +40,8 @@ export class AuthLogsService {
     // get the user id from the email
     if (!userId) {
       userId =
-        (
-          (await this.user.findOne({ email }).exec()) as UserInterface
-        )._id.toString() || undefined;
+        ((await this.user.findOne({ email }).exec()) as User)._id.toString() ||
+        undefined;
     }
     // save the log
     const newLog: PostAuthLogDto = {
@@ -114,14 +113,14 @@ export class AuthLogsService {
         .exec();
 
       // get all the auth logs
-      const logs: AuthLogInterface[] = await this.logs.aggregate(search).exec();
+      const logs: AuthLog[] = await this.logs.aggregate(search).exec();
 
       const total = counts.length > 0 ? counts[0].count : 0;
 
       const pages = Math.ceil(total / limit);
 
       // prepare the response
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,

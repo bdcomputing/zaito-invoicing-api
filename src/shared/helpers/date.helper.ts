@@ -1,4 +1,4 @@
-import { PeriodsInterface } from 'src/database/interfaces/paginated-data.interface';
+import { Periods } from 'src/database/interfaces/paginated-data.interface';
 
 export function DateHelper(date: Date | undefined) {
   const oldDateObj = date || new Date();
@@ -67,7 +67,7 @@ export function coverDaysLeft(payload: {
     new Date(expiryDate).getTime() - new Date(startDate).getTime();
   return Math.round(diffInTime / oneDay);
 }
-interface EntryInterface {
+interface Entry {
   year: number;
   month: string;
   value: number;
@@ -99,10 +99,10 @@ export function GetUniqueMonths(availableDates: string[]) {
     acc[year].push({ year, month: months[month - 1], value: month });
     return acc;
   }, {});
-  const arr: PeriodsInterface[] = Object.keys(uniqueDates)
+  const arr: Periods[] = Object.keys(uniqueDates)
     .map((key) => uniqueDates[key])
     .flat();
-  const monthsArray: PeriodsInterface[] = [];
+  const monthsArray: Periods[] = [];
   const getYears = arr.map((entry) => entry.year);
   const uniqueYears = [...new Set(getYears)];
   for (let i = 0; i < uniqueYears.length; i++) {
@@ -114,9 +114,7 @@ export function GetUniqueMonths(availableDates: string[]) {
 
     const monthsArr: { month: string; value: number }[] = [];
     for (let mn = 0; mn < getMonthsThisYear.length; mn++) {
-      const element: EntryInterface = getMonthsThisYear[
-        mn
-      ] as unknown as EntryInterface;
+      const element: Entry = getMonthsThisYear[mn] as unknown as Entry;
       if (!monthsArr.find((month) => month.value === element.value)) {
         monthsArr.push({
           month: element.month,
@@ -125,7 +123,7 @@ export function GetUniqueMonths(availableDates: string[]) {
       }
     }
 
-    const period: PeriodsInterface = {
+    const period: Periods = {
       year,
       months: [
         ...monthsArr.sort(function (a, b) {

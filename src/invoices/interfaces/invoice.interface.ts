@@ -1,12 +1,12 @@
-import { PatientInterface } from 'src/patients/interfaces/patient.interface';
+import { Patient } from 'src/patients/interfaces/patient.interface';
 
-export interface InvoiceInterface {
+export interface Invoice {
   _id: string;
   uniqueId: string;
   serial: string;
   clientId: string;
   narration: string;
-  client?: PatientInterface;
+  client?: Patient;
   vatAmount: number;
   vatRate: number;
   subTotal: number;

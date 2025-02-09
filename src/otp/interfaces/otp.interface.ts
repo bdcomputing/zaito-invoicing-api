@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { OTPUseEnum } from '../enums/otp-use.enum';
 
-export interface OTPInterface extends Document {
+export interface OTP extends Document {
   _id: string;
   code: string;
   phone?: string;

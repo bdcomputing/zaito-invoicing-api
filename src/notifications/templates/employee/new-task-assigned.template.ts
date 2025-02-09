@@ -1,11 +1,11 @@
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
-import { TaskInterface } from 'src/task-manager/interfaces/task.interface';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
+import { Task } from 'src/task-manager/interfaces/task.interface';
+import { User } from 'src/users/interfaces/user.interface';
 
 export const NewTaskAssignedEmailTemplate = (payload: {
-  settings: SettingsInterface;
-  employee: UserInterface;
-  task: TaskInterface;
+  settings: Settings;
+  employee: User;
+  task: Task;
 }) => {
   const url = `${payload.settings.appURL}/tasks/${payload.task._id.toString()}`;
   const css = '';

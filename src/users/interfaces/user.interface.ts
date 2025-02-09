@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
-import { NotificationSubScriptionsInterface } from 'src/notifications/interfaces/notification-subscription.interface';
+import { NotificationSubScriptions } from 'src/notifications/interfaces/notification-subscription.interface';
 
-export interface UserInterface extends Document {
+export interface User extends Document {
   _id: string;
   email: string;
   emailVerified: boolean;
@@ -14,7 +14,7 @@ export interface UserInterface extends Document {
   verified: boolean;
   password: string;
   isBackOfficeUser: boolean;
-  notifications: NotificationSubScriptionsInterface[];
+  notifications: NotificationSubScriptions[];
   resetPasswordToken: string | null;
   isPasswordDefault: boolean;
   defaultShippingAddress: string | null;

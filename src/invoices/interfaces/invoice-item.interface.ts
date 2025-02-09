@@ -1,4 +1,4 @@
-export interface InvoiceItemInterface {
+export interface InvoiceItem {
   _id: string;
   invoiceId: string;
   description: string;

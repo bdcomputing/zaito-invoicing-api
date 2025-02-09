@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 
 export const PasswordResetLinkTemplate = (
-  settings: SettingsInterface,
+  settings: Settings,
   user: { name: string; email: string },
   resetLink: string,
 ) => {

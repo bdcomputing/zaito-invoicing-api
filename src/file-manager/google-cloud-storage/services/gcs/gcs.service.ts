@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { GetSignedUrlConfig, Storage } from '@google-cloud/storage';
 import * as fs from 'fs';
 import { GCSStorageConfigService } from 'src/file-manager/google-cloud-storage/utils/storage.config';
-import { GoogleStorageConfigInterface } from '../../interfaces/config.interface';
+import { GoogleStorageConfig } from '../../interfaces/config.interface';
 import { format } from 'util';
 import { PassThrough } from 'stream';
 @Injectable()
@@ -21,7 +21,7 @@ export class GcsService {
   }
 
   async prepareStorage() {
-    const storageConfig: GoogleStorageConfigInterface =
+    const storageConfig: GoogleStorageConfig =
       await this.storageConfigService.getStorageConfig();
     this.storage = new Storage({
       projectId: storageConfig.googleProjectId, // Your Google Cloud project ID

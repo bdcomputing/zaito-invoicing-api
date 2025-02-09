@@ -1,9 +1,9 @@
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { DateHelper } from './date.helper';
 import { GenerateOTPDto } from 'src/otp/dto/generate-otp.dto';
 import { generatePassword } from '../utils/password-generator.util';
 
-export function GenerateOTPHelper(user: UserInterface) {
+export function GenerateOTPHelper(user: User) {
   const { phone } = user;
 
   const OTP: GenerateOTPDto = {

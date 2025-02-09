@@ -1,9 +1,9 @@
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 import { appName, logo } from 'src/shared/constants/constants';
 
 export const mailHeaderTemplate = (
   data: { title: string },
-  settings: SettingsInterface,
+  settings: Settings,
 ) => {
   const template = `
   <!DOCTYPE html>

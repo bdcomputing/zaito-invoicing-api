@@ -18,7 +18,7 @@ export interface HttpServiceResponse<T = any> {
   data: T;
 }
 
-export interface CredentialsInterface {
+export interface Credentials {
   /**
    * Consumer key
    */
@@ -32,12 +32,12 @@ export interface CredentialsInterface {
   certificatePath?: string | null;
 }
 
-export interface AuthorizeResponseInterface {
+export interface AuthorizeResponse {
   access_token: string;
   expires_in: string;
 }
 
-export interface B2CInterface {
+export interface B2C {
   Initiator: string;
   /**
    * The amount to be transacted.
@@ -100,7 +100,7 @@ export type CommandID =
   | 'TransactionStatusQuery'
   | 'TransactionReversal';
 
-export interface B2CResponseInterface {
+export interface B2CResponse {
   ConversationID: string;
   OriginatorConversationID: string;
   /**
@@ -145,7 +145,7 @@ export interface B2CResponseInterface {
   ResponseDescription: string;
 }
 
-export interface B2BInterface {
+export interface B2B {
   InitiatorName: string;
   /**
    * The amount to be transacted.
@@ -225,7 +225,7 @@ export interface B2BInterface {
 
 export type IdentifierType = '1' | '2' | '4';
 
-export interface AccountBalanceInterface {
+export interface AccountBalance {
   Initiator: string;
   /**
    * The Party sending the funds. Either msisdn or business short code
@@ -281,7 +281,7 @@ export interface AccountBalanceInterface {
   Remarks?: string;
 }
 
-export interface AccountBalanceResponseInterface {
+export interface AccountBalanceResponse {
   OriginatorConversationID: string;
   ConversationID: string;
   /**
@@ -326,7 +326,7 @@ export interface AccountBalanceResponseInterface {
   ResponseDescription: string;
 }
 
-export interface TransactionStatusInterface {
+export interface TransactionStatus {
   Initiator: string;
   TransactionID: string;
   /**
@@ -384,7 +384,7 @@ export interface TransactionStatusInterface {
   Occasion?: string;
 }
 
-export interface TransactionStatusResponseInterface {
+export interface TransactionStatusResponse {
   OriginatorConversationID: string;
   ConversationID: string;
   /**
@@ -428,7 +428,7 @@ export interface TransactionStatusResponseInterface {
   ResponseCode: string;
   ResponseDescription: string;
 }
-export interface ReversalInterface {
+export interface Reversal {
   Initiator: string;
   TransactionID: string;
   /**
@@ -487,7 +487,7 @@ export interface ReversalInterface {
   Occasion?: string;
 }
 
-export interface ReversalResponseInterface {
+export interface ReversalResponse {
   OriginatorConversationID: string;
   ConversationID: string;
   /**
@@ -532,7 +532,7 @@ export interface ReversalResponseInterface {
   ResponseDescription: string;
 }
 
-export interface StkPushInterface {
+export interface StkPush {
   /**
    * The organization shortcode used to receive the transaction.
    */
@@ -571,7 +571,7 @@ export interface StkPushInterface {
 
 export type TransactionType = 'PatientPayBillOnline' | 'PatientBuyGoodsOnline';
 
-export interface StkPushResponseInterface {
+export interface StkPushResponse {
   MerchantRequestID: string;
   CheckoutRequestID: string;
   /**
@@ -617,7 +617,7 @@ export interface StkPushResponseInterface {
   PatientMessage: string;
 }
 
-export interface StkQueryInterface {
+export interface StkQuery {
   /**
    * The organization shortcode used to receive the transaction.
    */
@@ -626,7 +626,7 @@ export interface StkQueryInterface {
   passKey: any;
 }
 
-export interface StkQueryResponseInterface {
+export interface StkQueryResponse {
   /**
    * M-Pesa Result and Response Codes
    *
@@ -672,7 +672,7 @@ export interface StkQueryResponseInterface {
   ResultCode: string;
   ResultDesc: string;
 }
-export interface C2BRegisterInterface {
+export interface C2BRegister {
   ShortCode: number;
   /**
    * This is a publicly accessible url where mpesa will send the confirmation to. Must accept POST requests
@@ -687,13 +687,13 @@ export interface C2BRegisterInterface {
 
 export type ResponseType = 'Completed' | 'Cancelled';
 
-export interface C2BRegisterResponseInterface {
+export interface C2BRegisterResponse {
   ConversationID: string;
   OriginatorCoversationID: string;
   ResponseDescription: string;
 }
 
-export interface C2BSimulateInterface {
+export interface C2BSimulate {
   /**
    * `TransactionReversal` - Reversal for an erroneous C2B transaction.
    *
@@ -735,7 +735,7 @@ export interface C2BSimulateInterface {
   ShortCode: number;
 }
 
-export interface C2BSimulateResponseInterface {
+export interface C2BSimulateResponse {
   ConversationID: string;
   OriginatorCoversationID: string;
   ResponseDescription: string;

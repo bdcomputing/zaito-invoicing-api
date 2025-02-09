@@ -1,22 +1,22 @@
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import {
   NotificationChannelsEnum,
   NotificationTypeEnum,
 } from '../enums/notification.enum';
-import { NotificationSubScriptionsInterface } from '../interfaces/notification-subscription.interface';
+import { NotificationSubScriptions } from '../interfaces/notification-subscription.interface';
 /**
  * Get the status on whether to send a notification to a user
  *
  * @export
  * @param {{
- *   user: UserInterface;
+ *   user: User;
  *   notificationType: NotificationTypeEnum;
  *   channel: NotificationChannelsEnum;
  * }} payload
  * @return {*}  {boolean}
  */
 export function getNotificationSubscriptionStatus(payload: {
-  user: UserInterface;
+  user: User;
   notificationType: NotificationTypeEnum;
   channel: NotificationChannelsEnum;
 }): boolean {
@@ -28,7 +28,7 @@ export function getNotificationSubscriptionStatus(payload: {
   }
   // get the index
   const index = subscriptions.findIndex(
-    (item: NotificationSubScriptionsInterface) =>
+    (item: NotificationSubScriptions) =>
       (item.notification as NotificationTypeEnum) === notification,
   );
 
@@ -36,7 +36,7 @@ export function getNotificationSubscriptionStatus(payload: {
     return false;
   }
 
-  const subscription: NotificationSubScriptionsInterface = subscriptions[index];
+  const subscription: NotificationSubScriptions = subscriptions[index];
   if (payload.channel === NotificationChannelsEnum.EMAIL) {
     return subscription.channels.email;
   } else if (payload.channel === NotificationChannelsEnum.WHATSAPP) {

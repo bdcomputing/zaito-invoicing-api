@@ -1,12 +1,12 @@
 import { PermissionEnum } from 'src/authorization/enums/permission.enum';
-import { CreateRoleInterface } from '../interfaces/roles.interface';
+import { CreateRole } from '../interfaces/roles.interface';
 
 export enum RolesEnum {
   SuperAdminRole = 'Super Administrator',
   ClinicRole = 'Administrator',
   PatientRole = 'Patient',
 }
-export const DefaultRolesData: CreateRoleInterface[] = [
+export const DefaultRolesData: CreateRole[] = [
   {
     role: RolesEnum.SuperAdminRole,
     permissions: Object.values(PermissionEnum),

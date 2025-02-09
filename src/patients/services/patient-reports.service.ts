@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
-import { PatientInterface } from '../interfaces/patient.interface';
+import { Patient } from '../interfaces/patient.interface';
 
 @Injectable()
 export class PatientReportsService {
@@ -13,7 +13,7 @@ export class PatientReportsService {
    */
   constructor(
     @Inject(DatabaseModelEnums.PATIENT_MODEL)
-    private patients: Model<PatientInterface>,
+    private patients: Model<Patient>,
   ) {}
 
   async getLatestPatientReports(limit?: number) {

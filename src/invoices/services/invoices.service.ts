@@ -6,16 +6,16 @@ import { DatabaseModelEnums } from 'src/database/enums/database.enum';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import {
   PrepareQueryForInvoice,
   PrepareQueryForInvoices,
 } from 'src/invoices/helpers/invoices-query.helper';
 import { CreateInvoiceDto, PostInvoiceDto } from '../dto/create-invoice.dto';
 import { UpdateInvoiceDto } from '../dto/update-invoice.dto';
-import { InvoiceInterface } from '../interfaces/invoice.interface';
+import { Invoice } from '../interfaces/invoice.interface';
 import { InvoiceItemDto, PostInvoiceItemDto } from '../dto/invoice-item.dto';
-import { InvoiceItemInterface } from '../interfaces/invoice-item.interface';
+import { InvoiceItem } from '../interfaces/invoice-item.interface';
 
 @Injectable()
 export class InvoicesService {
@@ -23,9 +23,9 @@ export class InvoicesService {
 
   constructor(
     @Inject(DatabaseModelEnums.INVOICE_MODEL)
-    private invoices: Model<InvoiceInterface>,
+    private invoices: Model<Invoice>,
     @Inject(DatabaseModelEnums.INVOICE_ITEM_MODEL)
-    private invoiceItems: Model<InvoiceItemInterface>,
+    private invoiceItems: Model<InvoiceItem>,
     private eventEmitter: EventEmitter2,
   ) {}
 
@@ -142,9 +142,7 @@ export class InvoicesService {
           paid: paidStatus,
         }) || [];
 
-      const invoices: InvoiceInterface[] = await this.invoices
-        .aggregate(search)
-        .exec();
+      const invoices: Invoice[] = await this.invoices.aggregate(search).exec();
       const counts = await this.invoices
         .aggregate([...search.slice(0, -2), { $count: 'count' }])
         .exec();
@@ -154,7 +152,7 @@ export class InvoicesService {
       const pages = Math.ceil(total / limit);
 
       // prepare the response
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,
@@ -188,7 +186,7 @@ export class InvoicesService {
     try {
       const aggregation: Array<any> = await PrepareQueryForInvoice(invoiceId);
       // Get invoice
-      const invoice: InvoiceInterface[] = await this.invoices
+      const invoice: Invoice[] = await this.invoices
         .aggregate(aggregation)
         .exec();
 
@@ -222,7 +220,7 @@ export class InvoicesService {
   ): Promise<CustomHttpResponse> {
     try {
       // Get invoice
-      const invoice: InvoiceInterface = await this.invoices
+      const invoice: Invoice = await this.invoices
         .findOne({ riskNoteId })
         .exec();
 
@@ -373,7 +371,7 @@ export class InvoicesService {
         },
       ];
 
-      const invoices: InvoiceInterface[] = await this.invoices
+      const invoices: Invoice[] = await this.invoices
         .aggregate(aggregation)
         .exec();
 

@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
+import { User } from 'src/users/interfaces/user.interface';
 
 export const PasswordResetSuccessEmailTemplate = (
-  settings: SettingsInterface,
-  user: UserInterface,
+  settings: Settings,
+  user: User,
 ) => {
   const template = `
   <div style="text-align: left;">

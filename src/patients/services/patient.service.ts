@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { PatientInterface } from 'src/patients/interfaces/patient.interface';
+import { Patient } from 'src/patients/interfaces/patient.interface';
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 
@@ -10,10 +10,10 @@ import { generatePassword } from 'src/shared/utils/password-generator.util';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import { PostUserDto } from 'src/users/dto/register-user.dto';
 import { UsersService } from 'src/users/services/users.service';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import {
   RegisterPatientDto,
   PostPatientDto,
@@ -26,14 +26,14 @@ export class PatientService {
 
   /**
    * Creates an instance of PatientService.
-   * @param {Model<PatientInterface>} patient
+   * @param {Model<Patient>} patient
    * @param {EventEmitter2} eventEmitter
    * @param {UsersService} usersService
    * @memberof PatientService
    */
   constructor(
     @Inject(DatabaseModelEnums.PATIENT_MODEL)
-    private patient: Model<PatientInterface>,
+    private patient: Model<Patient>,
     private eventEmitter: EventEmitter2,
     private readonly usersService: UsersService,
   ) {}
@@ -58,7 +58,7 @@ export class PatientService {
       const users = await this.usersService.findAll();
 
       if (users) {
-        const emailExist = users.find((u: UserInterface) => {
+        const emailExist = users.find((u: User) => {
           u.email === email;
         });
 
@@ -72,7 +72,7 @@ export class PatientService {
         }
 
         // confirm phone
-        const phoneExist = users.find((u: UserInterface) => {
+        const phoneExist = users.find((u: User) => {
           u.phone === phone;
         });
 
@@ -85,7 +85,7 @@ export class PatientService {
         }
         const patients = await this.patient.find().exec();
         // confirm KRA PIN
-        const KRA_PINExist = patients.find((c: PatientInterface) => {
+        const KRA_PINExist = patients.find((c: Patient) => {
           c.KRA_PIN === KRA_PIN;
         });
 
@@ -97,23 +97,21 @@ export class PatientService {
           );
         }
       }
-      const patients: PatientInterface[] = await this.patient
+      const patients: Patient[] = await this.patient
         .find({}, { idNumber: 1, KRA_PIN: 1, _id: 1 })
         .exec();
 
       /**
        * Checks if the provided incorporation number already exists for a patient.
        *
-       * @param {PatientInterface[]} patients - The list of existing patients to search.
+       * @param {Patient[]} patients - The list of existing patients to search.
        * @param {string} patientDto.id - The id number to check.
-       * @returns {PatientInterface} The patient with matching incorporation number, if found.
+       * @returns {Patient} The patient with matching incorporation number, if found.
        */
       if (patientDto.idNumber && patientDto.idNumber.length > 0) {
-        const idNumberExists: PatientInterface = patients.find(
-          (cl: PatientInterface) => {
-            return cl.idNumber === patientDto.idNumber;
-          },
-        );
+        const idNumberExists: Patient = patients.find((cl: Patient) => {
+          return cl.idNumber === patientDto.idNumber;
+        });
 
         // Check if ID number exists
         if (idNumberExists) {
@@ -127,7 +125,7 @@ export class PatientService {
       }
 
       if (patientDto.KRA_PIN && patientDto.KRA_PIN.length > 0) {
-        const KRAPinExists = patients.find((patient: PatientInterface) => {
+        const KRAPinExists = patients.find((patient: Patient) => {
           return (
             patient.KRA_PIN.toUpperCase() === patientDto.KRA_PIN.toUpperCase()
           );
@@ -197,8 +195,7 @@ export class PatientService {
         };
 
         // create the user
-        const user: UserInterface = (await this.usersService.create(userData))
-          .data;
+        const user: User = (await this.usersService.create(userData)).data;
 
         this.eventEmitter.emit(SystemEventsEnum.UserCreated, user);
       }
@@ -225,9 +222,9 @@ export class PatientService {
    * Get a patient by ID.
    *
    * @param {string} id - The ID of the patient to retrieve.
-   * @returns {Promise<PatientInterface>} A promise that resolves to the patient document.
+   * @returns {Promise<Patient>} A promise that resolves to the patient document.
    */
-  async findOne(id: string): Promise<PatientInterface> {
+  async findOne(id: string): Promise<Patient> {
     return this.patient.findById(id).exec();
   }
 
@@ -319,7 +316,7 @@ export class PatientService {
           : {};
 
       // get all the patients
-      const patients: PatientInterface[] = ([] = await this.patient
+      const patients: Patient[] = ([] = await this.patient
         .find(
           { ...search },
           slim
@@ -339,7 +336,7 @@ export class PatientService {
       const pages = Math.ceil(total / limit);
 
       // prepare the response
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,
@@ -439,10 +436,10 @@ export class PatientService {
   /**
    * Find all Patients
    *
-   * @return {*}  {Promise<PatientInterface[]>}
+   * @return {*}  {Promise<Patient[]>}
    * @memberof PatientService
    */
-  async findAll(): Promise<PatientInterface[]> {
+  async findAll(): Promise<Patient[]> {
     return this.patient.find().exec();
   }
 
@@ -450,10 +447,10 @@ export class PatientService {
    * Find Patient by ID
    *
    * @param {string} id
-   * @return {*}  {Promise<PatientInterface>}
+   * @return {*}  {Promise<Patient>}
    * @memberof PatientService
    */
-  async findById(id: string): Promise<PatientInterface> {
+  async findById(id: string): Promise<Patient> {
     return this.patient.findById(id);
   }
 }

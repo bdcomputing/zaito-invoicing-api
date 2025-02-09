@@ -1,11 +1,11 @@
 import { OnEvent } from '@nestjs/event-emitter';
 import { AppWebSocketGateway } from '../gateway.ws';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
-import { TaskInterface } from 'src/task-manager/interfaces/task.interface';
+import { Task } from 'src/task-manager/interfaces/task.interface';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { QueuesEnum } from 'src/queues/enums/queues.enum';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { UsersService } from 'src/users/services/users.service';
 
 export class TasksGateway extends AppWebSocketGateway {
@@ -22,22 +22,22 @@ export class TasksGateway extends AppWebSocketGateway {
   /**
    * Broadcast tasks back to the client on task creation
    *
-   * @param {TaskInterface} task
+   * @param {Task} task
    * @memberof TasksGateway
    */
   @OnEvent(SystemEventsEnum.TaskCreated, { async: true })
-  async sendNewTask(task: TaskInterface) {
+  async sendNewTask(task: Task) {
     this.server.emit('newTask', task);
   }
 
   @OnEvent(SystemEventsEnum.Tasks, { async: true })
-  async broadcastTasks(tasks: TaskInterface[]) {
+  async broadcastTasks(tasks: Task[]) {
     this.server.emit('tasks', tasks);
   }
 
   @OnEvent(SystemEventsEnum.TaskOverdue, { async: true })
-  async sendTaskOverdue(task: TaskInterface) {
-    const user: UserInterface = await this.usersService.findOne(task.assignee);
+  async sendTaskOverdue(task: Task) {
+    const user: User = await this.usersService.findOne(task.assignee);
     if (task.assignee) {
       this.tasksQueue.add(
         { task, user },
@@ -47,7 +47,7 @@ export class TasksGateway extends AppWebSocketGateway {
     this.server.emit('taskOverdue', task);
   }
   @OnEvent(SystemEventsEnum.TaskReminder, { async: true })
-  async sendTaskReminder(task: TaskInterface) {
+  async sendTaskReminder(task: Task) {
     this.server.emit('taskReminder', task);
   }
 

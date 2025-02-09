@@ -9,11 +9,11 @@ import {
   PostTaskDto,
   PostUpdatedTaskDto,
 } from 'src/task-manager/dto/create-task.dto';
-import { TaskInterface } from 'src/task-manager/interfaces/task.interface';
+import { Task } from 'src/task-manager/interfaces/task.interface';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SystemEventsEnum } from 'src/events/enums/events.enum';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import { UsersService } from 'src/users/services/users.service';
 import { ObjectId } from 'mongodb';
 import { PrepareAggregateForTasks } from '../helpers/tasks-query.helper';
@@ -23,14 +23,14 @@ export class TaskManagerService {
   private logger = new Logger(TaskManagerService.name);
   /**
    * Creates an instance of TaskManagerService.
-   * @param {Model<TaskInterface>} tasks
+   * @param {Model<Task>} tasks
    * @param {EventEmitter2} eventEmitter
    * @param {UsersService} usersService
    * @memberof TaskManagerService
    */
   constructor(
     @Inject(DatabaseModelEnums.TASKS_MODEL)
-    private tasks: Model<TaskInterface>,
+    private tasks: Model<Task>,
     private readonly eventEmitter: EventEmitter2,
     private readonly usersService: UsersService,
   ) {}
@@ -50,7 +50,7 @@ export class TaskManagerService {
       const task = await this.tasks.create(payload);
       // get task creator
       const creator = await this.usersService.findOne(task.createdBy);
-      const taskInstance: TaskInterface = {
+      const taskInstance: Task = {
         _id: task._id,
         assignee: task.assignee,
         description: task.description,
@@ -394,7 +394,7 @@ export class TaskManagerService {
       }
 
       // get all the tasks
-      const tasks: TaskInterface[] = await this.tasks.aggregate(aggregation);
+      const tasks: Task[] = await this.tasks.aggregate(aggregation);
 
       const counts = await this.tasks.aggregate([
         ...aggregation.slice(0, -2),
@@ -406,7 +406,7 @@ export class TaskManagerService {
       const pages = Math.ceil(total / limit);
 
       // prepare the response
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,

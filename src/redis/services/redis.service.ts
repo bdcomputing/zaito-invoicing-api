@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { RedisRepository } from '../repositories/redis.repository';
+import { RedisRepositoryService } from '../repositories/redis.repository';
 import { RedisPrefixEnum } from '../enums/redis-prefix.enum';
 
 const oneDayInSeconds = 60 * 60 * 24;
@@ -16,7 +16,8 @@ export class RedisService {
    * @memberof RedisService
    */
   constructor(
-    @Inject(RedisRepository) private readonly redisRepository: RedisRepository,
+    @Inject(RedisRepositoryService)
+    private readonly redisRepository: RedisRepositoryService,
   ) {}
 
   async saveRefreshToken(userId: string, token: string): Promise<void> {

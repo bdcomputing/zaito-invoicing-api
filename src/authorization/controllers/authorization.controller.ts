@@ -4,7 +4,7 @@ import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { PermissionsGuard } from 'src/authorization/guards/permission.guard';
 import { AuthorizationService } from 'src/authorization/services/authorization.service';
 import { CustomHttpResponse } from 'src/shared';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { RequiredPermissions } from '../decorators/permissions.decorator';
 import { PermissionEnum } from '../enums/permission.enum';
 
@@ -16,7 +16,7 @@ export class AuthorizationController {
   /**
    * Sync the roles and permissions
    *
-   * @return {*}  {Promise<PermissionInterface[]>}
+   * @return {*}  {Promise<Permission[]>}
    * @memberof AuthorizationController
    * @param userId
    */
@@ -43,7 +43,7 @@ export class AuthorizationController {
   @RequiredPermissions(PermissionEnum.VIEW_ROLE)
   async getRolesWithPermissions(
     @Body() payload: { permissions: PermissionEnum[] },
-    @Req() req: { user: UserInterface },
+    @Req() req: { user: User },
   ) {
     const userId: string = req.user._id.toString();
     const roles = await this.authorizationService.getRolesWithPermissions(

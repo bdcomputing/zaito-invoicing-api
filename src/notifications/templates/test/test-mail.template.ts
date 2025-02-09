@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 
 export const TestEmailTemplate = (data: {
-  settings: SettingsInterface;
+  settings: Settings;
   email: string;
 }) => {
   const css = '';

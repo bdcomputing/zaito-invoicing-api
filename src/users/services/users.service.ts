@@ -10,7 +10,7 @@ import { DefaultNotificationSubscriptions } from 'src/notifications/data/default
 import { CustomHttpResponse } from 'src/shared';
 import { HttpStatusCodeEnum } from 'src/shared/enums/status-codes.enum';
 import { hashPassword } from 'src/shared/helpers/hash-password.helper';
-import { UserInterface } from 'src/users/interfaces/user.interface';
+import { User } from 'src/users/interfaces/user.interface';
 import { AuthorizationService } from '../../authorization/services/authorization.service';
 import { SettingsService } from '../../settings/services/settings.service';
 import {
@@ -19,9 +19,9 @@ import {
 } from '../dto/register-employee.dto';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { PaginatedDataInterface } from 'src/database/interfaces/paginated-data.interface';
+import { PaginatedData } from 'src/database/interfaces/paginated-data.interface';
 import { PrepareEmployeeAggregation } from 'src/users/helpers/employee-aggregator.helper';
-import { RoleInterface } from 'src/authorization/interfaces/roles.interface';
+import { Role } from 'src/authorization/interfaces/roles.interface';
 import {
   ManageMagicLoginDto,
   PostMagicLoginStatusDto,
@@ -36,7 +36,7 @@ import {
 export class UsersService {
   /**
    * Creates an instance of UsersService.
-   * @param {Model<UserInterface>} user
+   * @param {Model<User>} user
    * @param {SettingsService} settings
    * @param {AuthorizationService} authorizationService
    * @param {RolesService} rolesService
@@ -44,7 +44,7 @@ export class UsersService {
    * @memberof UsersService
    */
   constructor(
-    @Inject(DatabaseModelEnums.USER_MODEL) private user: Model<UserInterface>,
+    @Inject(DatabaseModelEnums.USER_MODEL) private user: Model<User>,
     private readonly settings: SettingsService,
     private readonly authorizationService: AuthorizationService,
     private readonly rolesService: RolesService,
@@ -113,8 +113,7 @@ export class UsersService {
       }
     }
     const hashedPassword = await hashPassword(password);
-    const role: RoleInterface | undefined =
-      await this.rolesService.getClinicRole();
+    const role: Role | undefined = await this.rolesService.getClinicRole();
 
     // create user
     const user = await this.user.create({
@@ -220,18 +219,18 @@ export class UsersService {
    * Get a user using their email
    *
    * @param {string} id
-   * @return {*}  {Promise<UserInterface>}
+   * @return {*}  {Promise<User>}
    * @memberof UsersService
    */
-  async findOne(id: string): Promise<UserInterface> {
-    const user: UserInterface = await this.user.findOne({
+  async findOne(id: string): Promise<User> {
+    const user: User = await this.user.findOne({
       _id: id,
       isActive: true,
     });
     return Promise.resolve(user);
   }
-  async findByPatientId(patientId: string): Promise<UserInterface> {
-    const user: UserInterface = await this.user.findOne({
+  async findByPatientId(patientId: string): Promise<User> {
+    const user: User = await this.user.findOne({
       patientId,
     });
     return Promise.resolve(user);
@@ -535,10 +534,10 @@ export class UsersService {
   /**
    * Find all users in the system
    *
-   * @return {*}  {Promise<UserInterface[]>}
+   * @return {*}  {Promise<User[]>}
    * @memberof UsersService
    */
-  async findAll(): Promise<UserInterface[]> {
+  async findAll(): Promise<User[]> {
     return this.user.find().exec();
   }
 
@@ -576,7 +575,7 @@ export class UsersService {
 
       const pages = Math.ceil(total / limit);
 
-      const response: PaginatedDataInterface = {
+      const response: PaginatedData = {
         page,
         limit,
         total,

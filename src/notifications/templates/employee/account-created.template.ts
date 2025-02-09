@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { UserInterface } from 'src/users/interfaces/user.interface';
-import { SettingsInterface } from 'src/settings/interfaces/settings.interface';
+import { User } from 'src/users/interfaces/user.interface';
+import { Settings } from 'src/settings/interfaces/settings.interface';
 
 export const EmployeeAccountCreatedEmailTemplate = (
-  settings: SettingsInterface,
-  employee: UserInterface,
+  settings: Settings,
+  employee: User,
 ) => {
   const css = '';
   const template = `

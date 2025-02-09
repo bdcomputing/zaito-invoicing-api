@@ -1,10 +1,10 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { GCSFileResponseInterface } from '../interfaces/gcs-file.interface';
+import { GCSFileResponse } from '../interfaces/gcs-file.interface';
 import { UploadFileToGCSDto } from './upload-file.dto';
 
 export class FileUploadedResponseDto {
   @IsNotEmpty()
-  metadata: GCSFileResponseInterface;
+  metadata: GCSFileResponse;
 
   @IsNotEmpty()
   payload: UploadFileToGCSDto;

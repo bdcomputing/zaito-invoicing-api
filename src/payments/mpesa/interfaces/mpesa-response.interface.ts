@@ -1,4 +1,4 @@
-export interface MpesaPaymentInterface {
+export interface MpesaPayment {
   FirstName: string;
   MiddleName: string;
   LastName: string;
