@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/bkiprono/zaito-invoicing-api/compare/v1.1.0...v1.2.0) (2025-02-09)
+
+
+### Features
+
+* enhance patient schema and DTOs with additional fields for address and demographics ([661cca9](https://github.com/bkiprono/zaito-invoicing-api/commit/661cca9f0a044ddd79fedd0fe7f4571e07a1120e))
+
 ## [1.1.0](https://github.com/bkiprono/zaito-invoicing-api/compare/v1.0.3...v1.1.0) (2025-02-09)
 
 

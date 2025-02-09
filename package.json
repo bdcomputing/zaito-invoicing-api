@@ -1,6 +1,6 @@
 {
   "name": "emr-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "This is the Official Dental EMR API",
   "author": "BD Computing Limited",
   "private": true,
