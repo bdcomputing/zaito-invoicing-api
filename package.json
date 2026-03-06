@@ -97,7 +97,7 @@
     "save-dev": "^0.0.1-security",
     "sharp": "^0.33.5",
     "swagger-ui-express": "^5.0.0",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.27"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
